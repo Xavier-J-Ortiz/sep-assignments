@@ -10,9 +10,9 @@ class Screen
     self.height = height
     matrix = []
 
-    for j in (0..height)
+    for j in (0...height)
       row = []
-      for i in (0..width)
+      for i in (0...width)
         row.push(nil)
       end
       matrix.push(row)
