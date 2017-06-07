@@ -26,12 +26,9 @@ class MyStack
   end
 
   def empty?
-
     if self.top != nil
       return false 
     end
-
     true
-
   end
 end
