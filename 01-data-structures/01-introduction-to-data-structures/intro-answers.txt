@@ -1,0 +1,19 @@
+for Line:
+
+1) My data structure allows developers to access and manipulate the data by exposing some methods that will allow me to insert the names of people in a conteptual line represented by the class created.
+The "join" function allows the class' user to add someone to the data structure, as you would get in a line.
+The "leave" function allows someone that matches the name person to be removed from the line.
+The functions, "front", "middle", and "back" allow someone to see who is located where with respect to the current people within the line.
+These functions represent the person located at the relative position within the line.
+
+2) To search for a specific element in the data structure, we would search for it by using the built in "search" function in order to see if said person exists in the structure.
+
+3) The line could also represent any sort of line at a cashier, bank, amusement park. Or, the order in which an assembly line parts are going down a conveyer belt.
+
+for Screen:
+
+1) The data structure allows us to access and manipulate the data through the "insert" method. It allows me to insert a pixel, at a specified (x, y) location on the Screen by specifying where on the screen the pixel shall be located.
+
+2) If a developer wanted to find an element in the data structure, they would have to use the "at" method, specify an (x, y), and see if a pixel exists there on the Screen.
+
+3) The Screen can represent a matrix of numbers, where the number is represented by each pixel information at each (x, y) coordinate.
