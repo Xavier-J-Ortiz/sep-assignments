@@ -5,7 +5,6 @@ class MyQueue
   def initialize
     @queue = Array.new
     @head = @queue[0]
-    @tail = @queue[@queue.length]
   end
 
   def enqueue(element)
@@ -21,6 +20,5 @@ class MyQueue
   end
 
   def empty?
-    @head == nil ? true : false
-  end
+    @head == nil ? true : false end
 end
