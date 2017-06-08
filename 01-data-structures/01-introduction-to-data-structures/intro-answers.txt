@@ -3,17 +3,18 @@ for Line:
 1) My data structure allows developers to access and manipulate the data by exposing some methods that will allow me to insert the names of people in a conteptual line represented by the class created.
 The "join" function allows the class' user to add someone to the data structure, as you would get in a line.
 The "leave" function allows someone that matches the name person to be removed from the line.
-The functions, "front", "middle", and "back" allow someone to see who is located where with respect to the current people within the line.
-These functions represent the person located at the relative position within the line.
+Invoking the functions, "front", "middle", or "back" return the person whom is in the front, middle, or back of the line.
 
 2) To search for a specific element in the data structure, we would search for it by using the built in "search" function in order to see if said person exists in the structure.
 
-3) The line could also represent any sort of line at a cashier, bank, amusement park. Or, the order in which an assembly line parts are going down a conveyer belt.
+3) The line could also represent any sort of line at a cashier, bank, amusement park. Or, a fully built product going down it's final conveyor belt, serial number instead of a given name, to be boxed.
 
 for Screen:
 
-1) The data structure allows us to access and manipulate the data through the "insert" method. It allows me to insert a pixel, at a specified (x, y) location on the Screen by specifying where on the screen the pixel shall be located.
+1) The data structure allows us to access and manipulate the data through the "insert" method. It allows me to insert a pixel, at a specified (x, y) location on the Screen by specifying where on the screen the pixel shall be located as long as the (x, y) coordinates are within bounds. If a pixel already exists at this location, it will get overridden.
 
 2) If a developer wanted to find an element in the data structure, they would have to use the "at" method, specify an (x, y), and see if a pixel exists there on the Screen.
 
-3) The Screen can represent a matrix of numbers, where the number is represented by each pixel information at each (x, y) coordinate.
+3) The Screen can represent a kids party game. It would be a box with prizes, and the box would have n x n holes stuffed with prizes! Sort of like this without the moles! :D http://crossfitcypher.com/wp-content/uploads/2015/09/whackamoles.png
+
+The kid would choose a hole to pick prizes out of, and each hole would have a goodie bag with a certain amount of red, green, or blue candy! Unfortunately, these magical bags can only hold up to 255 of each candy, however, 255 peices of sugar for a kid is waaaay too much for.
