@@ -20,5 +20,6 @@ class MyQueue
   end
 
   def empty?
-    @head == nil ? true : false end
+    @head == nil ? true : false
+  end
 end
