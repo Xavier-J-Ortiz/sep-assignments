@@ -63,4 +63,19 @@ RSpec.describe MyQueue, type: Class do
       expect(q.empty?).to eq true
     end
   end
+
+  describe "#length" do
+    it "shows the length of the queue" do
+      q.enqueue("Rob")
+      expect(q.length).to eq 1
+      q.enqueue("Ben")
+      expect(q.length).to eq 2
+      q.enqueue("Jim")
+      expect(q.length).to eq 3
+      q.dequeue
+      expect(q.length).to eq 2
+      q.dequeue
+      expect(q.length).to eq 1
+    end
+  end
 end
