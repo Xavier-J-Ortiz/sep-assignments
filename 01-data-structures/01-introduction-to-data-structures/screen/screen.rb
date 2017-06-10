@@ -24,16 +24,16 @@ class Screen
 
   # Insert a Pixel at x, y
   def insert(pixel, x, y)
-    inbounds(x, y) ? self.matrix[y][x] = pixel : nil
+    is_within_bounds?(x, y) ? self.matrix[y][x] = pixel : nil
   end
 
   def at(x, y)
-    inbounds(x, y) ? self.matrix[y][x] : nil
+    is_within_bounds?(x, y) ? self.matrix[y][x] : nil
   end
 
   private
 
-  def inbounds(x, y)
+  def is_within_bounds?(x, y)
 
     if x >= self.width or x < 0
       return false
@@ -42,7 +42,6 @@ class Screen
     end
 
     true
-
   end
 
 end

@@ -39,9 +39,13 @@ RSpec.describe Line, type: Class do
   end
 
   describe "#search" do
-    it "finds the person we're searching for" do
+    it "finds the position of the person we're searching for" do
       person = line.search("Ted")
-      expect(person).to eq "Ted"
+      expect(person).to eq 3
+    end
+    it "returns 'nil' when searched person does not exist in line" do
+      person = line.search("Chow Yung Fat")
+      expect(person).to eq nil
     end
   end
 

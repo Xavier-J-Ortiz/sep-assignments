@@ -3,42 +3,45 @@
 # People may leave the line whenever they see fit and those behind them take their place.
 class Line
   attr_accessor :members
+  attr_accessor :line_length
 
   def initialize
-    self.members = []
+    @members = []
+    @line_length = @members.length
   end
 
-  def join(person)
-    self.members.push(person)
+  def join person 
+    @members.push(person)
+    @line_length = @members.length
   end
 
-  def leave(person)
-    self.members.delete(person)
+  def leave person 
+    @members.delete(person)
+    @line_length = @members.length
   end
 
   def front
-    self.members[0]
+    @members[0]
   end
 
   def middle
-    last_persons_index = self.members.length
-    self.members[(last_persons_index / 2)]
+    @members[(@line_length / 2)]
   end
 
   def back
-    self.members[-1]
+    @members[-1]
   end
 
-  def search(person)
-    if index(person)
-      return person
-    end
+  def search person 
+    # represents the location of the person in the line
+    index(person) + 1 
   end
 
   private
 
-  def index(person)
-    self.members.index(person)
+  def index person 
+
+    @members.index(person)
   end
 
 end
