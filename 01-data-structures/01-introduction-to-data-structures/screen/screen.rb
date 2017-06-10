@@ -6,8 +6,8 @@ class Screen
   attr_accessor :matrix
 
   def initialize(width, height)
-    self.width = width
-    self.height = height
+    @width = width
+    @height = height
     matrix = []
 
     for j in (0...height)
@@ -18,30 +18,38 @@ class Screen
       matrix.push(row)
     end
 
-    self.matrix = matrix
-
+    @matrix = matrix
   end
 
   # Insert a Pixel at x, y
   def insert(pixel, x, y)
-    is_within_bounds?(x, y) ? self.matrix[y][x] = pixel : nil
+    if self.at(x, y)
+      return "Pixel already exists in this position. Use overwrite instead"
+    end
+    is_within_bounds?(x, y) ? @matrix[y][x] = pixel : nil
+  end
+
+  # Overwrite a pixel when one exists already at (x, y)
+  def overwrite(pixel, x, y)
+    if !self.at(x, y)
+      return "No pixel entry exists here. Use insert instead."
+    end
+    is_within_bounds?(x, y) ? @matrix[y][x] = pixel : nil
   end
 
   def at(x, y)
-    is_within_bounds?(x, y) ? self.matrix[y][x] : nil
+    is_within_bounds?(x, y) ? @matrix[y][x] : nil
   end
 
   private
 
   def is_within_bounds?(x, y)
 
-    if x >= self.width or x < 0
+    if x >= @width or x < 0
       return false
-    elsif y >= self.height or y < 0
+    elsif y >= @height or y < 0
       return false
     end
-
     true
   end
-
 end
