@@ -1,34 +1,28 @@
 class MyStack
   attr_accessor :top
+  attr_accessor :stack_length
 
   def initialize
     @stack = Array.new
-    self.top = nil
+    @top = nil
+    @stack_length = @stack.length
   end
 
   def push(item)
-    if empty?
-      @stack[0] = item
-      self.top = item
-    else
-      @stack[@stack.length] = item
-      self.top = item
-    end
+    @stack[@stack.length] = item
+    @top = item
+    @stack_length = @stack.length
+
   end
 
   def pop
-    if !empty? 
-      popped_item = @stack.slice!(@stack.length - 1)
-      @stack.length != 0 ? self.top = @stack[@stack.length - 1] : self.top = nil
-      return popped_item
-    end
-    self.top
+    popped_item = @stack.slice!(@stack.length - 1)
+    @stack_length != 0 ? @top = @stack[@stack.length - 1] : @top = nil
+    @stack_length = @stack.length
+    popped_item
   end
 
   def empty?
-    if self.top != nil
-      return false 
-    end
-    true
+    @stack_length == 0 ? true : false
   end
 end
