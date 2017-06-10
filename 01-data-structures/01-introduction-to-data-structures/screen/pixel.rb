@@ -7,16 +7,23 @@ class Pixel
   attr_accessor :red
   attr_accessor :green
   attr_accessor :blue
-  attr_accessor :x
-  attr_accessor :y
 
+  def initialize(red, green, blue)
+    @red = validate_color(red)
+    @green = validate_color(green)
+    @blue = validate_color(blue)
+  end
 
-  def initialize(red, green, blue, x, y)
-    self.red = validate_color(red)
-    self.green = validate_color(green)
-    self.blue = validate_color(blue)
-    self.x = x
-    self.y = y
+  def dominant_primary_color
+    if @red > @green && @red > @blue
+      return "red"
+    elsif @green > @red && @green > @blue
+      return "green"
+    elsif @blue > @green && @blue > @red
+      return "blue"
+    else
+      return "there is no single dominant primary color"
+    end
   end
 
   private
@@ -28,9 +35,7 @@ class Pixel
     elsif color < 0
       return color = 0
     end
-
     color
 
   end
-
 end
