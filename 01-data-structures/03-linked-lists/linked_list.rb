@@ -60,11 +60,7 @@ class LinkedList
         current_node = next_node
         next_node = current_node.next 
       end
-      current_node.next = next_node.next
-      if next_node.next == nil
-        @tail = current_node
-      end
-      next_node.next = nil
+      delete_next_node(current_node, next_node)
     end
   end
 
@@ -89,7 +85,9 @@ class LinkedList
       end
     end
   end
-
+  
+  # added this due to the benchmark portion of the assignment asking for me to delete the nth element in the List.
+  # In order to do a like for like with an Array, thought appropriate to add this method.
   def delete_node_by_index(index)
     if index == 0
       if @head.next != nil
@@ -101,11 +99,7 @@ class LinkedList
     else
       current_node = locate_node_by_index(index - 1)
       next_node = current_node.next
-      current_node.next = next_node.next
-      if next_node.next == nil
-        @tail = current_node
-      end
-      next_node.next = nil
+      delete_next_node(current_node, next_node)
     end
   end
 
@@ -117,5 +111,13 @@ class LinkedList
       next_node = current_node.next 
     end
     current_node
+  end
+
+  def delete_next_node(current_node, next_node)
+    current_node.next = next_node.next
+    if next_node.next == nil
+      @tail = current_node
+    end
+    next_node.next = nil
   end
 end
