@@ -89,4 +89,33 @@ class LinkedList
       end
     end
   end
+
+  def delete_node_by_index(index)
+    if index == 0
+      if @head.next != nil
+        @head = @head.next
+      else
+        @tail = nil
+        @head = nil
+      end
+    else
+      current_node = locate_node_by_index(index - 1)
+      next_node = current_node.next
+      current_node.next = next_node.next
+      if next_node.next == nil
+        @tail = current_node
+      end
+      next_node.next = nil
+    end
+  end
+
+  def  locate_node_by_index(index)
+    current_node = @head
+    next_node = @head.next
+    for i in (1..index)
+      current_node = next_node
+      next_node = current_node.next 
+    end
+    current_node
+  end
 end

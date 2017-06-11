@@ -89,4 +89,41 @@ RSpec.describe LinkedList, type: Class do
       expect(llist.head).to eq nil
     end
   end
+
+  describe "#locate_node_by_index" do
+    before do
+      llist.add_to_tail(n1)
+      llist.add_to_tail(n2)
+      llist.add_to_tail(n3)
+    end
+
+    it "locates nodes by index" do
+      expect(llist.locate_node_by_index(0).data).to eq "Rob"
+      expect(llist.locate_node_by_index(1).data).to eq "Ben"
+      expect(llist.locate_node_by_index(2).data).to eq "Mike"
+      llist.delete(n2)
+      expect(llist.locate_node_by_index(0).data).to eq "Rob"
+      expect(llist.locate_node_by_index(1).data).to eq "Mike"
+    end
+
+    describe "#delete_node_by_index" do
+      before do
+        llist.add_to_tail(n1)
+        llist.add_to_tail(n2)
+        llist.add_to_tail(n3)
+      end
+
+      it "deletes nodes by index" do
+        expect(llist.locate_node_by_index(0).data).to eq "Rob"
+        expect(llist.locate_node_by_index(1).data).to eq "Ben"
+        expect(llist.locate_node_by_index(2).data).to eq "Mike"
+        llist.delete_node_by_index(1) 
+        expect(llist.locate_node_by_index(0).data).to eq "Rob"
+        expect(llist.locate_node_by_index(1).data).to eq "Mike"
+        llist.delete_node_by_index(0) 
+        expect(llist.locate_node_by_index(0).data).to eq "Mike" 
+      end
+    end
+  end
 end
+
