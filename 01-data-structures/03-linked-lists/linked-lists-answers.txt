@@ -1,0 +1,25 @@
+1) Spatial Locality is when data references are found consecutively on memory. The benefit of using datastructures with spatial locality is that since the data within the datastructure is all located near each other, and RAM lookups are also done across a range of memory locations, once part of the datastructure is found the rest of the datastructure can be easily found by looking at consecutive memory locations, limiting the number of RAM lookups.
+
+2) Using Benchmark, using arrays or lists of 100000 items, the following was the output (slightly formatted for easier interpretation):
+
+              user     system      total        real
+Linitialize  0.020000   0.010000   0.030000 (  0.021833)
+Ainitialize  0.000000   0.000000   0.000000 (  0.004854)
+
+        user     system      total        real
+Lfind  0.010000   0.000000   0.010000 (  0.002413)
+Afind  0.000000   0.000000   0.000000 (  0.000001)
+
+          user     system      total        real
+Ldelete  0.000000   0.000000   0.000000 (  0.001915)
+Adelete  0.000000   0.000000   0.000000 (  0.000025)
+
+clearly, we can see that in running all functions of datastructures, Arrays vastly outperform from a time perspective a LinkedList.
+
+Comparing the time it takes to append 100,000 items to an Array vs to a Linked List, it takes about ~4 times more time to create the LinkedList than the Array
+
+Comparing how long it took to access the 50,000th entry, it took about 2400 times more to find the LinkedList. In this case the difference is quite pronounced mainly because to access an n-th item within the array takes O(1). To access the 50,000th array, we *necessarily* have to go through the first 49,999 elements to get to the 50,000th.
+
+Similarly, to remove the 50,000th element in an Array vs in a LinkedList the Array's internal process can easily find the location of the element that needs to be removed. The linked list has to *necessarily* go through the first 49,999 elements to get to delete the 50,000th element.
+
+
