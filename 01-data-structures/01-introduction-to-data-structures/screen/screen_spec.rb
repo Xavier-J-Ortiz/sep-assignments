@@ -8,14 +8,14 @@ RSpec.describe Screen, type: Class do
       pixel = Pixel.new(255, 200, 175)
       screen.insert(pixel, 1, 1)
 
-      expect(screen.at(1, 1)).to eq pixel
+      expect(screen.get_pixel(1, 1)).to eq pixel
     end
 
     it "retains color information upon insertion" do
       pixel = Pixel.new(255, 200, 175)
       screen.insert(pixel, 1, 1)
 
-      p1 = screen.at(1, 1)
+      p1 = screen.get_pixel(1, 1)
       expect(p1.red).to eq pixel.red
       expect(p1.green).to eq pixel.green
       expect(p1.blue).to eq pixel.blue
@@ -29,7 +29,7 @@ RSpec.describe Screen, type: Class do
       pixel2 = Pixel.new(205, 2, 75)
       expect(screen.insert(pixel2, 1, 1)).to eq "Pixel already exists in this position. Use overwrite instead"
 
-      p1 = screen.at(1, 1)
+      p1 = screen.get_pixel(1, 1)
       expect(p1.red).to eq pixel.red
       expect(p1.green).to eq pixel.green
       expect(p1.blue).to eq pixel.blue
@@ -45,7 +45,7 @@ RSpec.describe Screen, type: Class do
       pixel = Pixel.new(205, 2, 75)
       screen.overwrite(pixel, 1, 1)
 
-      p1 = screen.at(1, 1)
+      p1 = screen.get_pixel(1, 1)
       expect(p1.red).to eq pixel.red
       expect(p1.green).to eq pixel.green
       expect(p1.blue).to eq pixel.blue
@@ -55,7 +55,7 @@ RSpec.describe Screen, type: Class do
       pixel = Pixel.new(205, 2, 75)
       expect(screen.overwrite(pixel, 1, 1)).to eq "No pixel entry exists here. Use insert instead."
 
-      p1 = screen.at(1, 1)
+      p1 = screen.get_pixel(1, 1)
       expect(p1).to eq nil
     end
   end
@@ -65,12 +65,12 @@ RSpec.describe Screen, type: Class do
         pixel = Pixel.new(255, 200, 175)
         screen.insert(pixel, 1, 2)
 
-        p1 = screen.at(1, 2)
+        p1 = screen.get_pixel(1, 2)
         expect(p1).to eq pixel
       end
 
       it "handles invalid x, y values gracefully" do
-        pixel = screen.at(-1, -1)
+        pixel = screen.get_pixel(-1, -1)
 
         expect(pixel).to eq nil
       end

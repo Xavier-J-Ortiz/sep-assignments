@@ -8,22 +8,21 @@ class Screen
   def initialize(width, height)
     @width = width
     @height = height
-    matrix = []
+    @matrix = []
 
     for j in (0...height)
       row = []
       for i in (0...width)
         row.push(nil)
       end
-      matrix.push(row)
+      @matrix.push(row)
     end
 
-    @matrix = matrix
   end
 
   # Insert a Pixel at x, y
   def insert(pixel, x, y)
-    if self.at(x, y)
+    if self.get_pixel(x, y)
       return "Pixel already exists in this position. Use overwrite instead"
     end
     is_within_bounds?(x, y) ? @matrix[y][x] = pixel : nil
@@ -31,13 +30,13 @@ class Screen
 
   # Overwrite a pixel when one exists already at (x, y)
   def overwrite(pixel, x, y)
-    if !self.at(x, y)
+    if !self.get_pixel(x, y)
       return "No pixel entry exists here. Use insert instead."
     end
     is_within_bounds?(x, y) ? @matrix[y][x] = pixel : nil
   end
 
-  def at(x, y)
+  def get_pixel(x, y)
     is_within_bounds?(x, y) ? @matrix[y][x] : nil
   end
 
