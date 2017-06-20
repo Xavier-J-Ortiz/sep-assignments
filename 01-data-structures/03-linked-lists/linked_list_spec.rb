@@ -7,6 +7,7 @@ RSpec.describe LinkedList, type: Class do
   let(:n1) { Node.new("Rob") }
   let(:n2) { Node.new("Ben") }
   let(:n3) { Node.new("Mike") }
+  let(:n4) { Node.new("Vladimir") }
   let(:linked_list) { LinkedList.new }
 
   describe "#add_to_tail" do
@@ -33,6 +34,8 @@ RSpec.describe LinkedList, type: Class do
       linked_list.remove_tail
       expect(linked_list.length).to eq 0
       expect(linked_list.tail).to eq nil
+      linked_list.remove_tail
+
     end
   end
 
@@ -90,7 +93,7 @@ RSpec.describe LinkedList, type: Class do
       expect(linked_list.length).to eq 0
     end
 
-    it "removes the last element of a list properly" do
+    it "removes the last element of a list properly detects non-existing node" do
       linked_list.delete(n3)
       expect(linked_list.length).to eq 2
       expect(linked_list.head).to eq n1
@@ -101,6 +104,7 @@ RSpec.describe LinkedList, type: Class do
       expect(linked_list.head.next).to eq nil
       expect(linked_list.tail).to eq n2
       expect(linked_list.length).to eq 1
+      linked_list.delete(n4)
       linked_list.delete(n2)
       expect(linked_list.head).to eq nil 
       expect(linked_list.tail).to eq nil
