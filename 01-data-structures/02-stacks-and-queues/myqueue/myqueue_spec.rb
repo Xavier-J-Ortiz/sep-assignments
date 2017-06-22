@@ -44,12 +44,14 @@ RSpec.describe MyQueue, type: Class do
   end
 
   describe "#dequeue" do
-    it "removes an item from the front of the queue" do
+    it "removes an item from the front of the queue that has one element" do
       q.enqueue("Rob")
       expect(q.empty?).to eq false
       q.dequeue
       expect(q.empty?).to eq true
+    end
 
+    it "removes an item from the front of the queue with 3 elements" do
       q.enqueue("Rob")
       q.enqueue("Ben")
       q.enqueue("Jim")
@@ -57,12 +59,22 @@ RSpec.describe MyQueue, type: Class do
       expect(q.head).to eq "Ben"
       expect(q.tail).to eq "Jim"
       expect(q.empty?).to eq false
-
+    end
+    
+    it "removes an item from the front of the queue with 2 elements" do
+      q.enqueue("Ben")
+      q.enqueue("Jim")
       q.dequeue
+      expect(q.head).to eq "Jim"
+      expect(q.tail).to eq "Jim"
+      expect(q.empty?).to eq false
+    end
+    it "removes an item from the front of the queue with 1 element" do
+      q.enqueue("Jim")
       q.dequeue
-      expect(q.empty?).to eq true
       expect(q.head).to eq nil
       expect(q.tail).to eq nil
+      expect(q.empty?).to eq true
     end
   end
- end
+end
