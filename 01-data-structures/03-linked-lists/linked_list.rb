@@ -67,11 +67,11 @@ class LinkedList
   end
 
   def delete_node_by_index(index)
-    if index == 0
-      self.remove_front
-    else
+    if index != 0
       previous_node = locate_node_by_index(index - 1)
       delete_next_node(previous_node)
+    else
+      self.remove_front
     end
   end
 
