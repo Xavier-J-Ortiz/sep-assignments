@@ -6,18 +6,35 @@ class Screen
   attr_accessor :matrix
 
   def initialize(width, height)
+    @width = width
+    @height = height
+    @matrix = []
+
+    for j in (0...height)
+      row = []
+      for i in (0...width)
+        row.push(nil)
+      end
+      @matrix.push(row)
+    end
   end
 
-  # Insert a Pixel at x, y
   def insert(pixel, x, y)
+    is_within_bounds?(x, y) ? @matrix[y][x] = pixel : nil
   end
 
-  def at(x, y)
+  def get_pixel(x, y)
+    is_within_bounds?(x, y) ? @matrix[y][x] : nil
   end
 
   private
 
-  def inbounds(x, y)
+  def is_within_bounds?(x, y)
+    if x >= @width or x < 0
+      return false
+    elsif y >= @height or y < 0
+      return false
+    end
+    true
   end
-
 end

@@ -7,16 +7,21 @@ class Pixel
   attr_accessor :red
   attr_accessor :green
   attr_accessor :blue
-  attr_accessor :x
-  attr_accessor :y
 
-
-  def initialize(red, green, blue, x, y)
+  def initialize(red, green, blue)
+    @red = validate_color(red)
+    @green = validate_color(green)
+    @blue = validate_color(blue)
   end
 
   private
 
   def validate_color(color)
+    if color > 255
+      return color = 255
+    elsif color < 0
+      return color = 0
+    end
+    color
   end
-
 end
