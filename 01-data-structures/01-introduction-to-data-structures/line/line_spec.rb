@@ -43,6 +43,7 @@ RSpec.describe Line, type: Class do
       person = line.search("Ted")
       expect(person).to eq 3
     end
+
     it "returns 'nil' when searched person does not exist in line" do
       person = line.search("Chow Yung Fat")
       expect(person).to eq nil
@@ -62,5 +63,4 @@ RSpec.describe Line, type: Class do
       expect(line.search("Donald")).to be_nil
     end
   end
-
 end
