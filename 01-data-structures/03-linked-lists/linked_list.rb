@@ -70,17 +70,16 @@ class LinkedList
     if index == 0
       self.remove_front
     else
-      delete_next_node(locate_node_by_index(index - 1))
+      previous_node = locate_node_by_index(index - 1)
+      delete_next_node(previous_node)
     end
   end
 
   def  locate_node_by_index(index)
     if index < @length and index >= 0
       current_node = @head
-      next_node = @head.next
       for i in (1..index)
-        current_node = next_node
-        next_node = current_node.next 
+        current_node = current_node.next
       end
       return current_node
     else
