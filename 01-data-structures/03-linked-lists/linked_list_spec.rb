@@ -35,7 +35,6 @@ RSpec.describe LinkedList, type: Class do
       expect(linked_list.length).to eq 0
       expect(linked_list.tail).to eq nil
       linked_list.remove_tail
-
     end
   end
 
@@ -128,7 +127,7 @@ RSpec.describe LinkedList, type: Class do
   end
 
   describe "#remove_front" do
-    it "removes the node to the front of the linked list" do
+    it "removes the first node of the linked list" do
       linked_list.add_to_front(n1)
       expect(linked_list.length).to eq 1
       expect(linked_list.head).to eq n1
@@ -254,7 +253,4 @@ describe "#find_node_prior" do
       expect(linked_list.locate_node_by_index(2)).to eq nil 
     end
   end
-
-
 end
-
