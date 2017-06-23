@@ -20,7 +20,7 @@ class LinkedList
 
   def remove_tail
     if @tail && @head && @head.next  
-      @tail = find_node_prior(@tail, false)
+      @tail = find_node_prior(@tail)
       @tail.next = nil
       @length -= 1
     else
@@ -30,14 +30,18 @@ class LinkedList
     end
   end
 
-
   def print
-    find_node_prior(@tail, true) 
+    puts @head.data
+    node = @head
+    while node.next != nil
+      node = node.next
+      puts node.data
+    end
   end
 
   def delete(node)
     if @head != node
-      current_node = find_node_prior(node, false)      
+      current_node = find_node_prior(node)      
       delete_next_node(current_node)
     else
       self.remove_front
@@ -75,7 +79,7 @@ class LinkedList
     end
   end
 
-  def  locate_node_by_index(index)
+  def locate_node_by_index(index)
     if index < @length and index >= 0
       current_node = @head
       for i in (1..index)
@@ -85,22 +89,14 @@ class LinkedList
     else
       return nil
     end
-
   end
 
-  def find_node_prior(said_node, print)
+  def find_node_prior(current_node)
     node = @head
-    if print
-      puts node.data
-      puts node.next.data
-    end
-    while node.next != said_node && node != @tail
+    while node.next != current_node && node != @tail
       node = node.next
-      if print
-        puts node.next.data
-      end
     end
-    if node != @tail
+    if node.next != nil
       return node
     else 
       return nil
