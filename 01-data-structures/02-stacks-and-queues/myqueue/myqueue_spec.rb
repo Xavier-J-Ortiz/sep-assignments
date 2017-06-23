@@ -6,7 +6,7 @@ RSpec.describe MyQueue, type: Class do
   let(:q) { MyQueue.new }
 
   describe "#enqueue" do
-    it "enqueues strings to the queue, verifies with head and tail" do
+    it "enqueues strings to the queue" do
       q.enqueue("Rob")
       expect(q.head).to eq "Rob"
       expect(q.tail).to eq "Rob"

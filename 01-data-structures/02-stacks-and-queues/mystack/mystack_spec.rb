@@ -14,20 +14,20 @@ RSpec.describe MyStack, type: Class do
   end
 
   describe "#push" do
-    it "pushes a single item and checks the top of the stack" do
+    it "pushes a single item" do
       stack.push("Rob")
       expect(stack.top).to eq "Rob"
       expect(stack.stack_length).to eq 1
     end
 
-    it "pushes 2 items and checks the top of the stack" do
+    it "pushes 2 items" do
       stack.push("Rob")
       stack.push("Ben")
       expect(stack.top).to eq "Ben"
       expect(stack.stack_length).to eq 2
     end
 
-    it "pushes a single item and checks the top of the stack" do
+    it "pushes a three items" do
       stack.push("Rob")
       stack.push("Ben")
       stack.push("Tim")
@@ -41,7 +41,7 @@ RSpec.describe MyStack, type: Class do
       pusher
     end
 
-    it "pops an item off the top of the stack and returns it" do
+    it "pops an item off the top of the stack" do
       item = stack.pop
       expect(item).to eq "Frank"
       expect(stack.top).to eq "Jinhai"
