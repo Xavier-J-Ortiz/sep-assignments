@@ -19,22 +19,7 @@ RSpec.describe MyStack, type: Class do
       expect(stack.top).to eq "Rob"
       expect(stack.stack_length).to eq 1
     end
-
-    it "pushes 2 items" do
-      stack.push("Rob")
-      stack.push("Ben")
-      expect(stack.top).to eq "Ben"
-      expect(stack.stack_length).to eq 2
-    end
-
-    it "pushes a three items" do
-      stack.push("Rob")
-      stack.push("Ben")
-      stack.push("Tim")
-      expect(stack.top).to eq "Tim"
-      expect(stack.stack_length).to eq 3
-    end
-  end
+ end
 
   describe "#pop" do
     before do
