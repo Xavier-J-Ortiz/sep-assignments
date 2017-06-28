@@ -10,7 +10,7 @@ RSpec.describe LinkedList, type: Class do
   let(:n4) { Node.new("Vladimir") }
   let(:linked_list) { LinkedList.new }
 
-  def push_test_linkedlist
+  def push_three_items
     linked_list.add_to_tail(n1)
     linked_list.add_to_tail(n2)
     linked_list.add_to_tail(n3)
@@ -28,7 +28,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#remove_tail" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     it "removes a single node from the tail" do
@@ -40,7 +40,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#print" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     specify { expect { linked_list.print }.to output("Rob\nBen\nMike\n").to_stdout }
@@ -48,7 +48,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#delete" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     it "removes the head of a list properly" do
@@ -81,7 +81,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#delete_node_by_index" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     it "deletes the first node in the list" do
@@ -94,7 +94,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#locate_node_by_index" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     it "finds node by index" do
@@ -108,7 +108,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#find_previous_node" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     it "can locate tail's previous node" do
@@ -126,7 +126,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#delete_next_node" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     it "deletes next node specified" do
@@ -144,7 +144,7 @@ RSpec.describe LinkedList, type: Class do
 
   describe "#node.next" do
     before do
-      push_test_linkedlist
+      push_three_items
     end
 
     it "head.next points to the next node in the list" do
