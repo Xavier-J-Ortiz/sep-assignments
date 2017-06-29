@@ -20,6 +20,22 @@ RSpec.describe HashClass, type: Class do
     end
   end
 
+  describe "#[]=" do
+    it "adds a key, value pair to the hash" do
+      lotr_movies["test"] = "forever"
+      expect(lotr_movies["test"]).to eq "forever"
+    end
+  end
+
+  describe "#[]" do
+    before do
+      lotr_movies["The Lord of the Rings: The Fellowship of the Ring"] = "Boring!"
+    end
+
+    it "finds a value by specifying the key in a hash" do
+      expect(lotr_movies["The Lord of the Rings: The Fellowship of the Ring"]).to eq "Boring!"
+    end
+  end
   describe "#resize" do
     it "doubles the size of the array when invoked" do
       expect(lotr_movies.size).to eq 6
@@ -59,12 +75,23 @@ RSpec.describe HashClass, type: Class do
 
     it "sets the value of key to value" do
       lotr_movies["The Lord of the Rings: The Fellowship of the Ring"] = "3 hours, 48 minutes"
+      puts lotr_movies.items.to_s
+      puts lotr_movies.keys.to_s
       lotr_movies["The Lord of the Rings: The Two Towers"] = "3 hours, 55 minutes"
+      puts lotr_movies.items.to_s
+      puts lotr_movies.keys.to_s
       lotr_movies["The Lord of the Rings: The Return of the King"] = "3 hours, 21 minutes"
+      puts lotr_movies.items.to_s
+      puts lotr_movies.keys.to_s
       lotr_movies["The Hobbit: An Unexpected Journey"] = "3 hours, 2 minutes"
+      puts lotr_movies.items.to_s
+      puts lotr_movies.keys.to_s
       lotr_movies["The Hobbit: The Desolation of Smaug"] = "3 hours, 7 minutes"
+      puts lotr_movies.items.to_s
+      puts lotr_movies.keys.to_s
       lotr_movies["The Hobbit: The Battle of Five Armies"] = "2 hours, 44 minutes"
-
+      puts lotr_movies.items.to_s
+      puts lotr_movies.keys.to_s
       expect(lotr_movies["The Lord of the Rings: The Fellowship of the Ring"]).to eq "3 hours, 48 minutes"
       expect(lotr_movies["The Lord of the Rings: The Two Towers"]).to eq "3 hours, 55 minutes"
       expect(lotr_movies["The Lord of the Rings: The Return of the King"]).to eq "3 hours, 21 minutes"
