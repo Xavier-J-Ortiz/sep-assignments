@@ -1,7 +1,5 @@
 class HashClass
-  attr_reader :items
-  attr_reader :keys
-    
+  require 'murmurhash3'
   def initialize(size)
     @items = Array.new(size)
     @keys = Array.new(size)
@@ -12,11 +10,16 @@ class HashClass
     if @items[true_index].nil? 
       @keys[true_index] = key
       @items[true_index] = value
-    elsif value != self[key]
-      while !@items[true_index].nil?
+    elsif (value != self[key] && !(@keys[true_index] == key))
+      while !@items[true_index].nil? 
         self.resize
         true_index = index(key, self.size)
       end
+      @keys[true_index] = key
+      @items[true_index] = value
+    elsif (value != self[key] && (@keys[true_index] == key))
+      self.resize
+      true_index = index(key, self.size)
       @keys[true_index] = key
       @items[true_index] = value
     end
@@ -39,20 +42,12 @@ class HashClass
     end
   end
 
-  # Returns a unique, deterministically reproducible index into an array
-  # We are hashing based on strings, let's use the ascii value of each string as
-  # a starting point.
   def index(key, size)
-    ascii_sum = 0
-    key.each_byte do |ascii_number|
-      ascii_sum += ascii_number
-    end
-    ascii_sum % size
+    MurmurHash3::V32.str_hash(key.to_s, size) % size
   end
 
   # Simple method to return the number of items in the hash
   def size
     @items.length
   end
-
 end
