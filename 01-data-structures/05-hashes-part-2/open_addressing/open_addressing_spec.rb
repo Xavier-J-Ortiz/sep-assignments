@@ -18,7 +18,7 @@ RSpec.describe OpenAddressing, type: Class do
   describe "#index" do
     it "creates a hash key based on the string value passed in" do
       i = star_wars_movies.index("Star Wars: A New Hope", 6)
-      expect(i).to eq 4
+      expect(i).to eq 1
     end
   end
 
@@ -33,17 +33,17 @@ RSpec.describe OpenAddressing, type: Class do
     it "does not resizes the array when a collision occurs and hash is not full" do
       hash = OpenAddressing.new(4)
       hash["key"] = "value"
-      expect(hash.size).to eq 4
+      expect(hash.get_size).to eq 4
       hash["key"] = "second value"
-      expect(hash.size).to eq 4
+      expect(hash.get_size).to eq 4
     end
 
     it "resizes the array when a collision occurs and hash is full" do
       hash = OpenAddressing.new(1)
       hash["key"] = "value"
-      expect(hash.size).to eq 1
+      expect(hash.get_size).to eq 1
       hash["key"] = "second value"
-      expect(hash.size).to eq 2
+      expect(hash.get_size).to eq 2
     end
 
     it "sets the value of key to value" do
@@ -56,11 +56,11 @@ RSpec.describe OpenAddressing, type: Class do
     end
   end
 
-  describe "#next_open_index" do
-    it "returns -1 if there are no open indices" do
+  describe "#find_next_open_index" do
+    it "returns nil if there are no open indices" do
       inception = OpenAddressing.new(1)
       inception["The Original"] = "The Best Movie Ever"
-      expect(inception.next_open_index(0)).to eq -1
+      expect(inception.find_next_open_index(0)).to eq (nil)
     end
 
   end
@@ -68,9 +68,9 @@ RSpec.describe OpenAddressing, type: Class do
   describe "#resize" do
     it "doubles the size of the array when invoked" do
       movies = OpenAddressing.new(6)
-      expect(movies.size).to eq 6
+      expect(movies.get_size).to eq 6
       movies.resize
-      expect(movies.size).to eq 12
+      expect(movies.get_size).to eq 12
     end
 
     it "copies existing values properly when the array is resized" do
@@ -79,7 +79,7 @@ RSpec.describe OpenAddressing, type: Class do
       movies["Empire Strikes Back"] = "Excellent"
       movies["Return of the Jedi"] = "The Best"
       movies.resize
-      expect(movies.size).to eq 12
+      expect(movies.get_size).to eq 12
       expect(movies["A New Hope"]).to eq "Average"
       expect(movies["Empire Strikes Back"]).to eq "Excellent"
       expect(movies["Return of the Jedi"]).to eq "The Best"
