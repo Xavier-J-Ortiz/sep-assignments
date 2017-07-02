@@ -38,12 +38,14 @@ class SeparateChaining
     if !@buckets[true_index].nil?
       identified_list = @buckets[true_index]
       node = identified_list.head
-      while !node.nil? or node.key != key
+      while !node.nil? 
         if node.key == key
           return node.value
         end
         node = node.next
       end 
+      return nil
+    else
       return nil
     end
   end

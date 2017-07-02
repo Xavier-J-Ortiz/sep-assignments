@@ -11,15 +11,12 @@ class OpenAddressing
   def []=(key, value)
     true_index = index(key, self.get_size)
     open_index = find_next_open_index(true_index)
-
-    if !open_index.nil? 
-      if @keys[true_index] != key
-        @items[open_index] = value
-        @keys[open_index] = key
-        @number_of_items += 1.0
-      else
-        @items[true_index] = value
-      end
+    if !open_index.nil? && self[key].nil? 
+      @items[open_index] = value
+      @keys[open_index] = key
+      @number_of_items += 1.0
+    elsif !self[key].nil?
+      @items[true_index] = value
     else 
       self.resize
       self[key] = value
