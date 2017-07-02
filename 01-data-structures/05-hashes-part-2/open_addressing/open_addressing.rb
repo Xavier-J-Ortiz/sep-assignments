@@ -5,6 +5,7 @@ class OpenAddressing
   def initialize(size)
     @items = Array.new(size)
     @keys = Array.new(size)
+    @number_of_items = 0.0
   end
 
   def []=(key, value)
@@ -16,6 +17,7 @@ class OpenAddressing
     end
     @items[open_index] = value
     @keys[open_index] = key
+    @number_of_items += 1.0
   end
 
   def [](key)
@@ -66,11 +68,15 @@ class OpenAddressing
   def print_status
     puts
     puts "the array size is: " + self.get_size.to_s
+    puts "the load factor is: " + (@number_of_items / self.get_size).to_s
     puts "the array state is :"
-    puts "{"
+    puts "{ "
     for element in @keys do
+      print "\t" + @keys.index(element).to_s + " : "
       if !element.nil?
-        puts "\t'" + element.to_s + "' : '" + self[element].to_s + "',"
+        puts "{" + element.to_s + "' : '" + self[element].to_s + "}',"
+      else
+        puts "{nil}, "
       end
     end
     puts "}"

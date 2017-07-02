@@ -30,12 +30,13 @@ class LinkedList
     end
   end
 
-  def print
-    puts @head.key + " : " + @head.value
+  def print_status
+    print @head.key + " : " + @head.value + ", "
     node = @head
     while node.next != nil
       node = node.next
-      puts node.key + " : " + node.value
+      print node.key + " : " + node.value + ", "
+
     end
   end
 

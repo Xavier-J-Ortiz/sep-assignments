@@ -83,17 +83,25 @@ RSpec.describe SeparateChaining, type: Class do
 
     it "copies existing values properly when the array is resized" do
       movies = SeparateChaining.new(6)
+      movies.print_status
       movies["A New Hope"] = "Average"
+      movies.print_status
       movies["Empire Strikes Back"] = "Excellent"
+      movies.print_status
       movies["Return of the Jedi"] = "The Best"
+      movies.print_status
       expect(movies["Return of the Jedi"]).to eq "The Best"
       expect(movies["Empire Strikes Back"]).to eq "Excellent"
       expect(movies["A New Hope"]).to eq "Average"
       movies.resize
+      movies.print_status
       expect(movies.get_size).to eq 12
       expect(movies["A New Hope"]).to eq "Average"
+      movies.print_status
       expect(movies["Empire Strikes Back"]).to eq "Excellent"
+      movies.print_status
       expect(movies["Return of the Jedi"]).to eq "The Best"
+      movies.print_status
     end
   end
 end

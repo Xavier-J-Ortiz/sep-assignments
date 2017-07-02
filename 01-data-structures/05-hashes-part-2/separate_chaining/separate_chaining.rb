@@ -75,17 +75,17 @@ class SeparateChaining
   def print_status
     puts
     puts "the array size is: " + self.get_size.to_s
+    puts "the load factor is: " + self.load_factor.to_s
     puts "the array state is :"
     puts "{"
     for element in @buckets do
+      print "\t" + @buckets.index(element).to_s + " : "
       if !element.nil?
-        puts "\t{"
-        element.print
-        puts "\t}"
+        print "{"
+        element.print_status
+        puts "}"
       else
-        puts "\t{"
-        puts "\t\tnil"
-        puts "\t}"
+        puts "{nil}"
       end
     end
     puts "}"
