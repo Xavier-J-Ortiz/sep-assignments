@@ -12,12 +12,20 @@ class SeparateChaining
 
   def []=(key, value)
     true_index = index(key, self.get_size)
-    node = Node.new(key, value)
+    #node = Node.new(key, value)
     if !@buckets[true_index].nil?
-      @buckets[true_index].add_to_tail(node)
+      node = @buckets[true_index].head
+      while !node.nil?
+        if node.key == key
+          node.value = value
+          return
+        end
+        node = node.next
+      end
+      @buckets[true_index].add_to_tail(Node.new(key, value))
     elsif @buckets[true_index].nil?
       @buckets[true_index] = LinkedList.new
-      @buckets[true_index].add_to_tail(node)
+      @buckets[true_index].add_to_tail(Node.new(key, value))
     end
     @items += 1.0
     if @max_load_factor <= self.load_factor
@@ -78,8 +86,9 @@ class SeparateChaining
     puts "the load factor is: " + self.load_factor.to_s
     puts "the array state is :"
     puts "{"
+    counter = 0
     for element in @buckets do
-      print "\t" + @buckets.index(element).to_s + " : "
+      print "\t" + counter.to_s + " : "
       if !element.nil?
         print "{"
         element.print_status
@@ -87,6 +96,7 @@ class SeparateChaining
       else
         puts "{nil}"
       end
+      counter += 1
     end
     puts "}"
   end

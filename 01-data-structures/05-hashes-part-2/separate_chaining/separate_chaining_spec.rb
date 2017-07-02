@@ -32,8 +32,10 @@ RSpec.describe SeparateChaining, type: Class do
     it "does not resize the array when a collision occurs and the values match" do
       hash = SeparateChaining.new(4)
       hash["key"] = "value"
+      #hash.print_status
       expect(hash.get_size).to eq 4
       hash["key"] = "second value"
+      #hash.print_status
       expect(hash.get_size).to eq 4
     end
 
@@ -57,18 +59,17 @@ RSpec.describe SeparateChaining, type: Class do
   describe "#load_factor" do
     it "returns the number of items in the hash divided by the size of the underlying array" do
       h = SeparateChaining.new(4)
+      #h.print_status
 
-      # Load Factor starts at zero
       expect(h.load_factor == 0).to be true
       h["key"] = "value"
-      h["keytwo"] = "value"
+      h["keytwo"] = "valve"
+      #h.print_status
 
-      # Load factor should be .5 when two items are added
       expect(h.load_factor).to eq 0.5
-      h["keytwo"] = "value"
+      h["keythree"] = "banue"
+      #h.print_status
 
-      # Load factor goes down to .375 (3/8) since when third item is added, load factor goes to .75
-      # then the resize is triggered and load factor is recalculated
       expect(h.load_factor).to eq 0.375
     end
   end
@@ -82,26 +83,38 @@ RSpec.describe SeparateChaining, type: Class do
     end
 
     it "copies existing values properly when the array is resized" do
-      movies = SeparateChaining.new(6)
-      movies.print_status
+      movies = SeparateChaining.new(3)
       movies["A New Hope"] = "Average"
-      movies.print_status
       movies["Empire Strikes Back"] = "Excellent"
-      movies.print_status
       movies["Return of the Jedi"] = "The Best"
-      movies.print_status
+      movies["Star Wars: The Clone Wars"] = "Very Interesting"
+      movies["Star Wars: The Force Awakens"] = "Amazing Reboot"
+      movies["Star Wars: The Last Jedi"] = "Lots of Hype!"
+      movies["Star Wars: Episode IX"] = "Title TBD"
+      movies["Star Wars: Magazines"] = "Don't Count"
+      movies["Star Wars: Fan Fiction"] = "Can Get Sued"
+      #movies.print_status
       expect(movies["Return of the Jedi"]).to eq "The Best"
       expect(movies["Empire Strikes Back"]).to eq "Excellent"
       expect(movies["A New Hope"]).to eq "Average"
+      expect(movies["Star Wars: The Clone Wars"]).to eq "Very Interesting"
+      expect(movies["Star Wars: The Force Awakens"]).to eq "Amazing Reboot"
+      expect(movies["Star Wars: The Last Jedi"]).to eq "Lots of Hype!"
+      expect(movies["Star Wars: Episode IX"]).to eq "Title TBD"
+      expect(movies["Star Wars: Magazines"]).to eq "Don't Count"
+      expect(movies["Star Wars: Fan Fiction"]).to eq "Can Get Sued"
       movies.resize
-      movies.print_status
-      expect(movies.get_size).to eq 12
+      expect(movies.get_size).to eq 48 
+      #movies.print_status
       expect(movies["A New Hope"]).to eq "Average"
-      movies.print_status
       expect(movies["Empire Strikes Back"]).to eq "Excellent"
-      movies.print_status
       expect(movies["Return of the Jedi"]).to eq "The Best"
-      movies.print_status
+      expect(movies["Star Wars: The Clone Wars"]).to eq "Very Interesting"
+      expect(movies["Star Wars: The Force Awakens"]).to eq "Amazing Reboot"
+      expect(movies["Star Wars: The Last Jedi"]).to eq "Lots of Hype!"
+      expect(movies["Star Wars: Episode IX"]).to eq "Title TBD"
+      expect(movies["Star Wars: Magazines"]).to eq "Don't Count"
+      expect(movies["Star Wars: Fan Fiction"]).to eq "Can Get Sued"
     end
   end
 end

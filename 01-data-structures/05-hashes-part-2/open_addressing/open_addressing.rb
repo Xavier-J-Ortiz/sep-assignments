@@ -9,25 +9,34 @@ class OpenAddressing
   end
 
   def []=(key, value)
-    open_index = find_next_open_index(index(key, self.get_size))
-    if open_index.nil? or (value != self[key] && @keys[open_index] == key)
+    true_index = index(key, self.get_size)
+    open_index = find_next_open_index(true_index)
+
+    if !open_index.nil? 
+      if @keys[true_index] != key
+        @items[open_index] = value
+        @keys[open_index] = key
+        @number_of_items += 1.0
+      else
+        @items[true_index] = value
+      end
+    else 
       self.resize
       self[key] = value
       return
     end
-    @items[open_index] = value
-    @keys[open_index] = key
-    @number_of_items += 1.0
   end
 
   def [](key)
-    original_true_index = index(key, self.get_size)
-    true_index = original_true_index
-    while @keys[true_index] != key and (true_index != ((original_true_index - 1) % self.get_size))
-      true_index = (true_index + 1) % self.get_size
+    true_index = index(key, self.get_size)
+    search_index = true_index
+    while @keys[search_index] != key and (search_index != ((true_index - 1) % self.get_size))
+      search_index = (search_index + 1) % self.get_size
     end
-    if @keys[true_index] == key
-      return @items[true_index]
+    if @keys[search_index] == key
+      return @items[search_index]
+    else
+      return nil
     end
   end
 
@@ -35,20 +44,18 @@ class OpenAddressing
     MurmurHash3::V32.str_hash(key.to_s, size) % size
   end
 
-  # Given an index, find the next open index in @items
   def find_next_open_index(index)
-    original_true_index = index
-    true_index = original_true_index
-    while !@items[true_index].nil? and !@keys[true_index].nil? do
-      true_index = (true_index + 1) % self.get_size
-      if original_true_index == true_index
+    true_index = index
+    open_index = true_index
+    while !@items[open_index].nil? and !@keys[open_index].nil? do
+      open_index = (open_index + 1) % self.get_size
+      if true_index == open_index
         return nil
       end
     end
-    true_index
+    open_index
   end
 
-  # Simple method to return the number of items in the hash
   def get_size
     @items.length
   end
@@ -58,6 +65,7 @@ class OpenAddressing
     old_keys = @keys.clone
     @items = Array.new(self.get_size * 2)
     @keys = Array.new(self.get_size)
+    @number_of_items = 0
     (0...old_keys.length).each do |old_index|
       if (old_keys[old_index] && old_items[old_index])
         self[old_keys[old_index]] = old_items[old_index]
@@ -71,13 +79,15 @@ class OpenAddressing
     puts "the load factor is: " + (@number_of_items / self.get_size).to_s
     puts "the array state is :"
     puts "{ "
+    counter = 0
     for element in @keys do
-      print "\t" + @keys.index(element).to_s + " : "
+      print "\t" + counter.to_s + " : "
       if !element.nil?
-        puts "{" + element.to_s + "' : '" + self[element].to_s + "}',"
+        puts "{" + element.to_s + " : " + self[element].to_s + "},"
       else
         puts "{nil}, "
       end
+      counter += 1
     end
     puts "}"
   end
