@@ -86,5 +86,17 @@ class BinarySearchTree
 
   # Recursive Breadth First Search
   def printf(children=nil)
+    current_node = nil
+    queue = [root]
+    while !queue.empty?
+      current_node = queue.shift
+      puts current_node.title + ": " + current_node.rating.to_s
+      if current_node.left
+        queue.push(current_node.left)
+      end
+      if current_node.right
+        queue.push(current_node.right)
+      end
+    end
   end
 end
