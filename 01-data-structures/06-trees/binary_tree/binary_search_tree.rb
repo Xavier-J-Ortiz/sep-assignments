@@ -26,11 +26,9 @@ class BinarySearchTree
   # Recursive Depth First Search
   def find(root, data)
     current_node = nil
-    visited = []
     stack = [root]
     while !stack.empty?
       current_node = stack.pop
-      visited.push(current_node)
       if current_node.left
         stack.push(current_node.left)
       end
@@ -48,6 +46,42 @@ class BinarySearchTree
   end
 
   def delete(root, data)
+    current_node = nil
+    stack = [root]
+    while !stack.empty?
+      current_node = stack.pop
+      if current_node.left
+        stack.push(current_node.left)
+      end
+      if current_node.right
+        stack.push(current_node.right)
+      end
+      if current_node.left && current_node.left.title == data
+        temp_left = current_node.left.left
+        temp_right = current_node.left.right
+        current_node.left = nil
+        if temp_right
+          insert(current_node, temp_right)
+        end
+        if temp_left
+          insert(current_node, temp_left)
+        end
+        return
+      elsif current_node.right && current_node.right.title == data
+        temp_left = current_node.right.left
+        temp_right = current_node.right.right
+        current_node.right = nil
+        if temp_right
+          insert(current_node, temp_right)
+        end
+        if temp_left
+          insert(current_node, temp_left)
+        end
+        return
+      elsif stack.length == 0
+        return nil
+      end
+    end
   end
 
   # Recursive Breadth First Search
