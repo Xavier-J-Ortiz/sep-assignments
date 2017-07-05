@@ -95,25 +95,47 @@ RSpec.describe MinBinaryHeap, type: Class do
   end
 
   describe "#find(data)" do
+    before do
+      tree.insert(root, donnie)
+      tree.insert(root, jedi)
+      tree.insert(root, inception)
+      tree.insert(root, matrix)
+      tree.insert(root, district)
+      tree.insert(root, martian)
+    end
     it "handles nil gracefully" do
+      found_node = tree.find(root, empire)
+      expect(found_node).to eq nil
     end
 
     it "properly finds a left node" do
+      found_node = tree.find(root, donnie)
+      expect(found_node.title).to eq donnie.title
     end
 
     it "properly finds a left-left node" do
+      found_node = tree.find(root, inception)
+      expect(found_node.title).to eq inception.title
     end
 
     it "properly finds a left-right node" do
+      found_node = tree.find(root, matrix)
+      expect(found_node.title).to eq matrix.title
     end
 
     it "properly finds a right node" do
+      found_node = tree.find(root, jedi)
+      expect(found_node.title).to eq jedi.title
     end
 
     it "properly finds a right-left node" do
+      found_node = tree.find(root, district)
+      expect(found_node.title).to eq district.title
     end
 
     it "properly finds a right-right node" do
+      found_node = tree.find(root, martian)
+      expect(found_node.title).to eq martian.title
     end
   end
 
