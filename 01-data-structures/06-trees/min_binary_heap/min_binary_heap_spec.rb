@@ -73,13 +73,6 @@ RSpec.describe MinBinaryHeap, type: Class do
       it "inserted node takes the place of the right node" do
         tree.insert(root, district)
         tree.insert(root, martian)
-        tree.insert(root, donnie)
-        expect(root.right.title).to eq donnie.title
-        expect(root.right.left.title).to eq matrix.title
-      end
-      it "inserted node takes the place of the right node" do
-        tree.insert(root, district)
-        tree.insert(root, martian)
         tree.insert(root, hope)
         tree.insert(root, donnie)
         expect(root.right.title).to eq donnie.title
@@ -91,6 +84,7 @@ RSpec.describe MinBinaryHeap, type: Class do
         expect(root.left.title).to eq inception.title
         expect(root.right.title).to eq matrix.title
       end
+
     end
   end
 
@@ -141,72 +135,95 @@ RSpec.describe MinBinaryHeap, type: Class do
   end
 
   describe "#delete(data)" do
-    before do
+    context "tree created by inserting a node with a higher rating than the next" do
+      before do
+        tree.insert(root, donnie)
+        tree.insert(root, jedi)
+        tree.insert(root, inception)
+        tree.insert(root, matrix)
+        tree.insert(root, district)
+        tree.insert(root, martian)
+      end
+      it "handles nil gracefully" do
+        expect(tree.delete(root, empire)).to eq nil
+      end
+
+      it "properly deletes a left node" do
+        tree.delete(root, donnie)
+        expect(root.left.title).to eq inception.title
+      end
+      it "properly deletes a left-left node" do
+        tree.delete(root, inception)
+        expect(root.left.left.title).to eq martian.title
+      end
+
+      it "properly deletes a left-right node" do
+        tree.delete(root, matrix)
+        expect(root.left.right.title).to eq martian.title
+      end
+
+      it "properly deletes a right node" do
+        tree.delete(root, jedi)
+        expect(root.right.title).to eq district.title
+      end
+
+      it "properly deletes a right-left node" do
+        tree.delete(root, district)
+        expect(root.right.left.title).to eq martian.title
+      end
+
+      it "properly deletes a right-right node" do
+        tree.delete(root, district)
+        expect(root.right.right).to eq nil
+      end
+    end
+    context "tree created will have a right branch with higher ratings than left branch" do
+      before do
+        tree.insert(root, pacific_rim)
+        tree.insert(root, hope)
+        tree.insert(root, jedi)
+        tree.insert(root, donnie)
+        tree.insert(root, empire)
+        tree.insert(root, mad_max_2)
+        tree.insert(root, inception)
+      end
+
+      it "properly deletes a node, and bubbles up" do
+        tree.delete(root, mad_max_2)
+        expect(root.right.right.title).to eq inception.title
+        expect(root.right.title).to eq hope.title
+      end
+
+      it "properly deletes a node, and bubbles up two" do
+        tree.delete(root, empire)
+        expect(root.right.title).to eq inception.title
+        expect(root.right.left.title).to eq hope.title
+      end
+    end
+  end
+  describe "#printf" do
+    specify {
+      expected_output = "Braveheart: 78\nDonnie Darko: 85\nStar Wars: Return of the Jedi: 80\nInception: 86\nThe Matrix: 87\nDistrict 9: 90\nThe Martian: 92\n"
       tree.insert(root, donnie)
       tree.insert(root, jedi)
       tree.insert(root, inception)
       tree.insert(root, matrix)
       tree.insert(root, district)
       tree.insert(root, martian)
-    end
-    it "handles nil gracefully" do
-      expect(tree.delete(root, empire)).to eq nil
-    end
+      expect { tree.printf }.to output(expected_output).to_stdout
+    }
 
-    it "properly deletes a left node" do
-      tree.delete(root, donnie)
-      expect(root.left.title).to eq inception.title
-    end
+    specify {
+      expected_output = "Pacific Rim: 72\nBraveheart: 78\nStar Wars: A New Hope: 93\nStar Wars: Return of the Jedi: 80\nDonnie Darko: 85\nStar Wars: The Empire Strikes Back: 94\nMad Max 2: The Road Warrior: 98\nInception: 86\n"
 
-    it "properly deletes a left-left node" do
-    end
-
-    it "properly deletes a left-right node" do
-    end
-
-    it "properly deletes a right node" do
-      tree.delete(root, jedi)
-      expect(root.right.title).to eq district.title
-    end
-
-    it "properly deletes a right-left node" do
-    end
-
-    it "properly deletes a right-right node" do
-    end
+      tree.insert(root, pacific_rim)
+      tree.insert(root, hope)
+      tree.insert(root, jedi)
+      tree.insert(root, donnie)
+      tree.insert(root, empire)
+      tree.insert(root, mad_max_2)
+      tree.insert(root, inception)
+      expect { tree.printf }.to output(expected_output).to_stdout
+    }
   end
 end
-=begin
-  describe "#printf" do
-     specify {
-       expected_output = "The Matrix: 87\nStar Wars: Return of the Jedi: 80\nStar Wars: A New Hope: 93\nPacific Rim: 72\nInception: 86\nThe Martian: 92\nStar Wars: The Empire Strikes Back: 94\nBraveheart: 78\nThe Shawshank Redemption: 91\nMad Max 2: The Road Warrior: 98\nDistrict 9: 90\n"
-       tree.insert(root, hope)
-       tree.insert(root, empire)
-       tree.insert(root, jedi)
-       tree.insert(root, martian)
-       tree.insert(root, pacific_rim)
-       tree.insert(root, inception)
-       tree.insert(root, braveheart)
-       tree.insert(root, shawshank)
-       tree.insert(root, district)
-       tree.insert(root, mad_max_2)
-       expect { tree.printf }.to output(expected_output).to_stdout
-     }
-
-     specify {
-       expected_output = "The Matrix: 87\nBraveheart: 78\nMad Max 2: The Road Warrior: 98\nPacific Rim: 72\nInception: 86\nDistrict 9: 90\nStar Wars: Return of the Jedi: 80\nThe Shawshank Redemption: 91\nThe Martian: 92\nStar Wars: The Empire Strikes Back: 94\nStar Wars: A New Hope: 93\n"
-       tree.insert(root, mad_max_2)
-       tree.insert(root, district)
-       tree.insert(root, shawshank)
-       tree.insert(root, braveheart)
-       tree.insert(root, inception)
-       tree.insert(root, pacific_rim)
-       tree.insert(root, martian)
-       tree.insert(root, jedi)
-       tree.insert(root, empire)
-       tree.insert(root, hope)
-       expect { tree.printf }.to output(expected_output).to_stdout
-     }
-  end
-=end
-

@@ -21,7 +21,11 @@ class MinBinaryHeap
     end
 
     while @tree[parent] && @tree[parent].rating > @tree[index].rating
+      if @tree[parent] != root
       temp = @tree[parent]
+      else
+        temp = @tree[parent].clone
+      end
       @tree[parent].title = @tree[index].title
       @tree[parent].rating = @tree[index].rating
       @tree[index].title = temp.title
@@ -60,7 +64,6 @@ class MinBinaryHeap
     while (element.left && element.left.rating < element.rating) or (element.right && element.right.rating < element.rating)
       if element.left && element.right && 
           (element.left.rating < element.rating && element.right.rating < element.rating)
-
         if element.left.rating <= element.right.rating
           temp_element = element
           element.title = element.left.title
@@ -76,9 +79,7 @@ class MinBinaryHeap
           element.right.rating = temp_element.rating
           element = element.right
         end
-
       else
-
         if element.left && (element.left.rating < element.rating)
           temp_element = element
           element.title = element.left.title
@@ -95,6 +96,29 @@ class MinBinaryHeap
           element.right.rating = temp_element.rating
           element = element.right
         end
+      end
+    end
+
+    element_index = @tree.index(element)
+    parent = element_index / 2
+
+    # need to add an upfilter
+    while (@tree[parent] && @tree[parent].rating > element.rating) 
+      temp_parent = @tree[parent]
+      tree[parent].title = element.title
+      tree[parent].rating = element.rating
+      element.title = temp_parent.title
+      element.rating = temp_parent.rating
+
+      element = tree[parent]
+      parent = element_index / 2
+    end
+  end
+
+  def printf
+    tree.each do |node|
+      if node
+        puts node.title + ": " + node.rating.to_s
       end
     end
   end
