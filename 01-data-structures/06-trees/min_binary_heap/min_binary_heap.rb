@@ -13,7 +13,7 @@ class MinBinaryHeap
     @tree.push(data)
     index = @tree.length - 1
     parent = index / 2
-    
+
     if @tree[parent] && index % 2 == 0 
       @tree[parent].left = @tree[index]
     elsif @tree[parent] && index % 2 != 0 
@@ -41,6 +41,61 @@ class MinBinaryHeap
   end
 
   def delete(root, data)
+    element = find(root, data)
+    if element
+      last_index = @tree.length - 1
+      parent = last_index / 2
+      last_element = @tree.pop
+      if @tree[parent] && last_index % 2 == 0 
+        @tree[parent].left = nil
+      elsif @tree[parent] && last_index % 2 != 0 
+        @tree[parent].right = nil
+      end
+
+      element.title = last_element.title
+      element.rating = last_element.rating
+    else
+      return nil
+    end
+    while (element.left && element.left.rating < element.rating) or (element.right && element.right.rating < element.rating)
+      if element.left && element.right && 
+          (element.left.rating < element.rating && element.right.rating < element.rating)
+
+        if element.left.rating <= element.right.rating
+          temp_element = element
+          element.title = element.left.title
+          element.rating = element.left.rating
+          element.left.title = temp_element.title
+          element.left.rating = temp_element.rating
+          element = element.left
+        elsif element.right.rating < element.left.rating
+          temp_element = element
+          element.title = element.right.title
+          element.rating = element.right.rating
+          element.right.title = temp_element.title
+          element.right.rating = temp_element.rating
+          element = element.right
+        end
+
+      else
+
+        if element.left && (element.left.rating < element.rating)
+          temp_element = element
+          element.title = element.left.title
+          element.rating = element.left.rating
+          element.left.title = temp_element.title
+          element.left.rating = temp_element.rating
+          element = element.left
+        end
+        if element.right && (element.right.rating < element.rating)
+          temp_element = element
+          element.title = element.right.title
+          element.rating = element.right.rating
+          element.right.title = temp_element.title
+          element.right.rating = temp_element.rating
+          element = element.right
+        end
+      end
+    end
   end
 end
-

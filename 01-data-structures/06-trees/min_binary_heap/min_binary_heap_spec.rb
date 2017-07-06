@@ -103,6 +103,7 @@ RSpec.describe MinBinaryHeap, type: Class do
       tree.insert(root, district)
       tree.insert(root, martian)
     end
+
     it "handles nil gracefully" do
       found_node = tree.find(root, empire)
       expect(found_node).to eq nil
@@ -140,10 +141,21 @@ RSpec.describe MinBinaryHeap, type: Class do
   end
 
   describe "#delete(data)" do
+    before do
+      tree.insert(root, donnie)
+      tree.insert(root, jedi)
+      tree.insert(root, inception)
+      tree.insert(root, matrix)
+      tree.insert(root, district)
+      tree.insert(root, martian)
+    end
     it "handles nil gracefully" do
+      expect(tree.delete(root, empire)).to eq nil
     end
 
     it "properly deletes a left node" do
+      tree.delete(root, donnie)
+      expect(root.left.title).to eq inception.title
     end
 
     it "properly deletes a left-left node" do
@@ -153,6 +165,8 @@ RSpec.describe MinBinaryHeap, type: Class do
     end
 
     it "properly deletes a right node" do
+      tree.delete(root, jedi)
+      expect(root.right.title).to eq district.title
     end
 
     it "properly deletes a right-left node" do
