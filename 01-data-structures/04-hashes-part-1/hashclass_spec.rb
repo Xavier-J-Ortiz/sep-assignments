@@ -37,6 +37,11 @@ RSpec.describe HashClass, type: Class do
   end
 
   describe "#print_status" do
+    hash = HashClass.new(1)
+
+    it "prints size and hash state"do
+      expect {hash["key"] = "value"}.to output("\nthe array size is: 1\nthe array state is :\n{\n\t'key' : 'value',\n}\n").to_stdout
+    end
   end
 
   describe "#resize" do
