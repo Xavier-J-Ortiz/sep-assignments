@@ -25,17 +25,20 @@ RSpec.describe OpenAddressing, type: Class do
     it "adds a value to the hash" do 
       expect(hash.get_size).to eq 1
     end
-
-    it "When a hash entry exists for that specific key, does not resizes on full hash" do
-      hash["key"] = "second value"
-      expect(hash.get_size).to eq 1
-      expect(hash["key"]).to eq "second value"
+    context "When a hash entry exists for that specific key," do
+      it "does not resizes on full hash" do
+        hash["key"] = "second value"
+        expect(hash.get_size).to eq 1
+        expect(hash["key"]).to eq "second value"
+      end 
     end
 
-    it "When a hash entry does not exist for that specific key, resizes on full hash" do
-      hash["keytwo"] = "second value"
-      expect(hash.get_size).to eq 2
-      expect(hash["keytwo"]).to eq "second value"
+    context "When a hash entry does not exist for that specific key," do
+      it "resizes on full hash" do
+        hash["keytwo"] = "second value"
+        expect(hash.get_size).to eq 2
+        expect(hash["keytwo"]).to eq "second value"
+      end
     end
 
     it "does not resizes the array when a hash is not full" do
@@ -49,8 +52,8 @@ RSpec.describe OpenAddressing, type: Class do
     it "sets the value of key to value" do
       expect(star_wars_movies["Star Wars: Revenge of the Sith"]).to eq "Number Three"
     end
-
-    it "when no entry has been assigned to a key, return nil" do
+    context "when no entry has been assigned to a key, "
+    it "return nil" do
       expect(star_wars_movies["misnomer"]).to eq nil
     end
   end
@@ -77,7 +80,7 @@ RSpec.describe OpenAddressing, type: Class do
   end
 
   describe "#resize" do
-    context "simple resize" do
+    context "resizes a structure to twice it's original size" do
       it "doubles the size of the array when invoked" do
         expect(movies.get_size).to eq 3
         movies.resize
@@ -85,7 +88,7 @@ RSpec.describe OpenAddressing, type: Class do
       end
     end
 
-    context "larger resize" do
+    context "When adding nodes to an already existing structure, " do
       before do
         movies["A New Hope"] = "Average"
         movies["Empire Strikes Back"] = "Excellent"
@@ -100,7 +103,7 @@ RSpec.describe OpenAddressing, type: Class do
         expect(movies.get_size).to eq 12
       end
 
-      it "verifies all key-value pairs are accessible after a resize" do
+      it "is able to access all key value pairs" do
         movies.resize
         expect(movies.get_size).to eq 24 
         expect(movies["A New Hope"]).to eq "Average"

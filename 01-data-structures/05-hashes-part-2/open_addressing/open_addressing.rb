@@ -27,7 +27,7 @@ class OpenAddressing
   def [](key)
     true_index = index(key, self.get_size)
     search_index = true_index
-    while @keys[search_index] != key and (search_index != ((true_index - 1) % self.get_size))
+    while verify_single_loop(search_index, true_index, key)
       search_index = (search_index + 1) % self.get_size
     end
     if @keys[search_index] == key
@@ -35,6 +35,11 @@ class OpenAddressing
     else
       return nil
     end
+  end
+
+  def verify_single_loop(search_index, true_index, key)
+    @keys[search_index] != key and 
+      (search_index != ((true_index - 1) % self.get_size))
   end
 
   def index(key, size)
@@ -58,8 +63,8 @@ class OpenAddressing
   end
 
   def resize
-    old_items = @items.clone
-    old_keys = @keys.clone
+    old_items = @items
+    old_keys = @keys
     @items = Array.new(self.get_size * 2)
     @keys = Array.new(self.get_size)
     @number_of_items = 0
