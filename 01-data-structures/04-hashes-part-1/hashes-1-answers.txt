@@ -1,0 +1,5 @@
+1) Explain why doubling the size of the underlying array of your HashClass may be a poor idea.
+
+As mentioned in the checkpoint, fragmentation of an array can be a problem. Large swaths of memory will be used if every collision doubles the array size. This be sparsely populated in between, making it very inefficient. The example worked on has 6 entries, however, the internal hash array is ov size 96! That means there are 90 unused locations within that array. This is a waste of memory. Also, allocating the memory is time consuming, and resource intensive. So not only is this inefficient from a memory stand point, but also from time consumption stand point as well.
+
+Lets also not forget that we are basically doing a 2^n increase, where n is the amount of collisions. As we learned in earlier checkpoints, 2^n is a very rapidly increasing exponential function. This grows very quickly, exacerbating the extra spaces that perhaps will go unused.
