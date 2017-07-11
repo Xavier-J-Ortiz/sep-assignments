@@ -23,7 +23,6 @@ class BinarySearchTree
     end
   end
 
-  # Recursive Depth First Search
   def find(root, data)
     current_node = nil
     stack = [root]
@@ -84,7 +83,6 @@ class BinarySearchTree
     end
   end
 
-  # Recursive Breadth First Search
   def printf(children=nil)
     current_node = nil
     queue = [root]

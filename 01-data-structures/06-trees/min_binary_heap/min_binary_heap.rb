@@ -5,12 +5,12 @@ class MinBinaryHeap
   attr_reader :tree
 
   def initialize(root)
-    @root = root
+    @root = root.clone
     @tree = [nil, @root]
   end
 
   def insert(root, data)
-    @tree.push(data)
+    @tree.push(data.clone)
     index = @tree.length - 1
     parent = index / 2
 
@@ -19,19 +19,16 @@ class MinBinaryHeap
     elsif @tree[parent] && index % 2 != 0 
       @tree[parent].right = @tree[index]
     end
-
-    while @tree[parent] && @tree[parent].rating > @tree[index].rating
-      if @tree[parent] != root
-      temp = @tree[parent]
-      else
-        temp = @tree[parent].clone
-      end
+    parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > @tree[index].rating
+    while parent_is_greater_than_child
+      temp = @tree[parent].clone
       @tree[parent].title = @tree[index].title
       @tree[parent].rating = @tree[index].rating
       @tree[index].title = temp.title
       @tree[index].rating = temp.rating
       index = parent
       parent = index / 2
+      parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > @tree[index].rating
     end
   end
 
@@ -50,9 +47,12 @@ class MinBinaryHeap
       last_index = @tree.length - 1
       parent = last_index / 2
       last_element = @tree.pop
-      if @tree[parent] && last_index % 2 == 0 
+      deleted_was_left = @tree[parent] && last_index % 2 == 0 
+      deleted_was_right = @tree[parent] && last_index % 2 != 0 
+
+      if deleted_was_left
         @tree[parent].left = nil
-      elsif @tree[parent] && last_index % 2 != 0 
+      elsif deleted_was_right
         @tree[parent].right = nil
       end
 
@@ -61,9 +61,12 @@ class MinBinaryHeap
     else
       return nil
     end
-    while (element.left && element.left.rating < element.rating) or (element.right && element.right.rating < element.rating)
-      if element.left && element.right && 
-          (element.left.rating < element.rating && element.right.rating < element.rating)
+
+    left_child_is_less_than_parent = element.left && element.left.rating < element.rating
+    right_child_is_less_than_parent = element.right && element.right.rating < element.rating
+
+    while left_child_is_less_than_parent or right_child_is_less_than_parent 
+      if left_child_is_less_than_parent && right_child_is_less_than_parent
         if element.left.rating <= element.right.rating
           temp_element = element
           element.title = element.left.title
@@ -80,7 +83,7 @@ class MinBinaryHeap
           element = element.right
         end
       else
-        if element.left && (element.left.rating < element.rating)
+        if left_child_is_less_than_parent
           temp_element = element
           element.title = element.left.title
           element.rating = element.left.rating
@@ -88,7 +91,7 @@ class MinBinaryHeap
           element.left.rating = temp_element.rating
           element = element.left
         end
-        if element.right && (element.right.rating < element.rating)
+        if right_child_is_less_than_parent
           temp_element = element
           element.title = element.right.title
           element.rating = element.right.rating
@@ -97,26 +100,32 @@ class MinBinaryHeap
           element = element.right
         end
       end
+      left_child_is_less_than_parent = element.left && element.left.rating < element.rating
+      right_child_is_less_than_parent = element.right && element.right.rating < element.rating
     end
 
     element_index = @tree.index(element)
     parent = element_index / 2
 
-    # need to add an upfilter
-    while (@tree[parent] && @tree[parent].rating > element.rating) 
-      temp_parent = @tree[parent]
-      tree[parent].title = element.title
-      tree[parent].rating = element.rating
+    parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
+
+    while parent_is_greater_than_child
+      temp_parent = @tree[parent].clone
+      @tree[parent].title = element.title
+      @tree[parent].rating = element.rating
       element.title = temp_parent.title
       element.rating = temp_parent.rating
 
-      element = tree[parent]
+      element = @tree[parent]
       parent = element_index / 2
+
+      parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
+
     end
   end
 
   def printf
-    tree.each do |node|
+    @tree.each do |node|
       if node
         puts node.title + ": " + node.rating.to_s
       end
