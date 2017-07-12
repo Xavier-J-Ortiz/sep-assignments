@@ -3,7 +3,7 @@ require_relative 'min_binary_heap/min_binary_heap'
 require_relative 'binary_tree/binary_search_tree'
 require_relative 'binary_tree/node'
 
-n = 10000000
+n = 1000000
 test_tree = BinarySearchTree.new(nil)
 test_heap = MinBinaryHeap.new(nil)
 
@@ -31,11 +31,11 @@ Benchmark.bm do |x|
   } 
 
   x.report(:Tree_find) {
-    test_tree.find(Node.new(1.to_s, 1), Node.new(4999999.to_s, 4999999))
+    test_tree.find(Node.new(1.to_s, 1), Node.new(499999.to_s, 499999))
   }
 
   x.report(:Heap_find) {
-    test_heap.find(Node.new(1.to_s, 1), Node.new(4999999.to_s, 4999999))
+    test_heap.find(Node.new(1.to_s, 1), Node.new(499999.to_s, 499999))
   }
 
   x.report(:Tree_delete) {

@@ -60,11 +60,7 @@ RSpec.describe MinBinaryHeap, type: Class do
       end
 
       it "inserted left-left node takes the place of the left node" do
-        puts "Donnie Darko"
         tree.insert(root, donnie)
-        puts "Donnie Darko"
-        puts
-        tree.printf
         expect(root.left.title).to eq "Donnie Darko"
         expect(root.left.left.title).to eq "Inception"
       end
@@ -196,8 +192,8 @@ RSpec.describe MinBinaryHeap, type: Class do
 
       it "properly deletes a node, and bubbles up" do
         tree.delete(root, mad_max_2)
-        expect(root.right.right.title).to eq "Star Wars: A New Hope"
         expect(root.right.title).to eq "Inception"
+        expect(root.right.right.title).to eq "Star Wars: A New Hope"
       end
 
       it "properly deletes a node, and bubbles up two" do

@@ -21,16 +21,12 @@ class MinBinaryHeap
     end
 
     while is_parent_greater_than_child(index, parent)
-      #puts "first" + root.title
-      #puts "first" + root.left.title.to_s
       temp_title = @tree[parent].title
       temp_rating = @tree[parent].rating
       @tree[parent].title = @tree[index].title
       @tree[parent].rating = @tree[index].rating
       @tree[index].title = temp_title
       @tree[index].rating = temp_rating
-      #puts "second" + root.title
-      #puts "second" + root.left.title.to_s
       index = parent
       parent = index / 2
     end
@@ -77,35 +73,39 @@ class MinBinaryHeap
     while left_child_is_less_than_parent or right_child_is_less_than_parent 
       if left_child_is_less_than_parent && right_child_is_less_than_parent
         if element.left.rating <= element.right.rating
-          temp_element = element
+          temp_element_title = element.title
+          temp_element_rating = element.rating
           element.title = element.left.title
           element.rating = element.left.rating
-          element.left.title = temp_element.title
-          element.left.rating = temp_element.rating
+          element.left.title = temp_element_title
+          element.left.rating = temp_element_rating
           element = element.left
         elsif element.right.rating < element.left.rating
-          temp_element = element
+          temp_element_title = element.title
+          temp_element_rating = element.rating
           element.title = element.right.title
           element.rating = element.right.rating
-          element.right.title = temp_element.title
-          element.right.rating = temp_element.rating
+          element.right.title = temp_element_title
+          element.right.rating = temp_element_rating
           element = element.right
         end
       else
         if left_child_is_less_than_parent
-          temp_element = element
+          temp_element_title = element.title
+          temp_element_rating = element.rating
           element.title = element.left.title
           element.rating = element.left.rating
-          element.left.title = temp_element.title
-          element.left.rating = temp_element.rating
+          element.left.title = temp_element_title
+          element.left.rating = temp_element_rating
           element = element.left
         end
         if right_child_is_less_than_parent
-          temp_element = element
+          temp_element_title = element.title
+          temp_element_rating = element.rating
           element.title = element.right.title
           element.rating = element.right.rating
-          element.right.title = temp_element.title
-          element.right.rating = temp_element.rating
+          element.right.title = temp_element_title
+          element.right.rating = temp_element_rating
           element = element.right
         end
       end
@@ -119,11 +119,12 @@ class MinBinaryHeap
     parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
 
     while parent_is_greater_than_child
-      temp_parent = @tree[parent]
+      temp_parent_title = @tree[parent].title
+      temp_parent_rating = @tree[parent].rating
       @tree[parent].title = element.title
       @tree[parent].rating = element.rating
-      element.title = temp_parent.title
-      element.rating = temp_parent.rating
+      element.title = temp_parent_title
+      element.rating = temp_parent_rating
 
       element = @tree[parent]
       parent = element_index / 2
