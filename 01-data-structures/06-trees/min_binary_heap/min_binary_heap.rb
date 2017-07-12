@@ -5,12 +5,12 @@ class MinBinaryHeap
   attr_reader :tree
 
   def initialize(root)
-    @root = root.clone
+    @root = root
     @tree = [nil, @root]
   end
 
   def insert(root, data)
-    @tree.push(data.clone)
+    @tree.push(data)
     index = @tree.length - 1
     parent = index / 2
 
@@ -19,16 +19,20 @@ class MinBinaryHeap
     elsif @tree[parent] && index % 2 != 0 
       @tree[parent].right = @tree[index]
     end
-    parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > @tree[index].rating
-    while parent_is_greater_than_child
-      temp = @tree[parent].clone
+
+    while is_parent_greater_than_child(index, parent)
+      #puts "first" + root.title
+      #puts "first" + root.left.title.to_s
+      temp_title = @tree[parent].title
+      temp_rating = @tree[parent].rating
       @tree[parent].title = @tree[index].title
       @tree[parent].rating = @tree[index].rating
-      @tree[index].title = temp.title
-      @tree[index].rating = temp.rating
+      @tree[index].title = temp_title
+      @tree[index].rating = temp_rating
+      #puts "second" + root.title
+      #puts "second" + root.left.title.to_s
       index = parent
       parent = index / 2
-      parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > @tree[index].rating
     end
   end
 
@@ -41,12 +45,17 @@ class MinBinaryHeap
     nil
   end
 
+  def  is_parent_greater_than_child(index, parent)
+    @tree[parent] && @tree[parent].rating > @tree[index].rating
+  end
+
   def delete(root, data)
     element = find(root, data)
     if element
       last_index = @tree.length - 1
       parent = last_index / 2
       last_element = @tree.pop
+
       deleted_was_left = @tree[parent] && last_index % 2 == 0 
       deleted_was_right = @tree[parent] && last_index % 2 != 0 
 
@@ -110,7 +119,7 @@ class MinBinaryHeap
     parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
 
     while parent_is_greater_than_child
-      temp_parent = @tree[parent].clone
+      temp_parent = @tree[parent]
       @tree[parent].title = element.title
       @tree[parent].rating = element.rating
       element.title = temp_parent.title
