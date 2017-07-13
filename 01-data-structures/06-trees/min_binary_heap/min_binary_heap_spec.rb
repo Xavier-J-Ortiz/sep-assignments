@@ -20,7 +20,7 @@ RSpec.describe MinBinaryHeap, type: Class do
   let (:tree) { MinBinaryHeap.new(braveheart) }
 
   describe "#insert(data)" do
-    context "simple heap inserted in size order" do
+    context "When entries are inserted in size order" do
       before do
         tree.insert(root, donnie)
         tree.insert(root, jedi)
@@ -29,48 +29,48 @@ RSpec.describe MinBinaryHeap, type: Class do
         tree.insert(root, district)
         tree.insert(root, martian)
       end
-      it "properly inserts a new node as a left child" do
+      it "inserts a new node as a left child" do
         expect(root.left.title).to eq "Donnie Darko" 
       end
 
-      it "properly inserts a new node as a left-left child" do
+      it "inserts a new node as a left-left child" do
         expect(root.left.left.title).to eq "Inception" 
       end
 
-      it "properly inserts a new node as a left-right child" do
+      it "inserts a new node as a left-right child" do
         expect(root.left.right.title).to eq "The Matrix"
       end
 
-      it "properly inserts a new node as a right child" do
+      it "inserts a new node as a right child" do
         expect(root.right.title).to eq "Star Wars: Return of the Jedi"
       end
 
-      it "properly inserts a new node as a right-left child" do
+      it "inserts a new node as a right-left child" do
         expect(root.right.left.title).to eq "District 9"
       end
 
-      it "properly inserts a new node as a right-right child" do
+      it "inserts a new node as a right-right child" do
         expect(root.right.right.title).to eq "The Martian"
       end
     end
-    context "test if one or more parent-child swaps ocurr if an inserted node.rating is smaller than it's parent.rating" do
+    context "When a smaller rating node is compared to it's parent is inserted" do
       before do
         tree.insert(root, inception)
         tree.insert(root, matrix)
       end
 
-      it "inserted left-left node takes the place of the left node" do
+      it "left-left node takes the place of the left node" do
         tree.insert(root, donnie)
         expect(root.left.title).to eq "Donnie Darko"
         expect(root.left.left.title).to eq "Inception"
       end
-      it "inserted left-right node takes the place of the left node" do
+      it "left-right node takes the place of the left node" do
         tree.insert(root, district)
         tree.insert(root, donnie)
         expect(root.left.title).to eq "Donnie Darko"
         expect(root.left.right.title).to eq "Inception"
       end
-      it "inserted right-left node takes the place of the right node" do
+      it "right-left node takes the place of the right node" do
         tree.insert(root, district)
         tree.insert(root, martian)
         tree.insert(root, hope)
@@ -105,32 +105,32 @@ RSpec.describe MinBinaryHeap, type: Class do
       expect(found_node).to eq nil
     end
 
-    it "properly finds a left node" do
+    it "finds a left node" do
       found_node = tree.find(root, donnie)
       expect(found_node.title).to eq "Donnie Darko"
     end
 
-    it "properly finds a left-left node" do
+    it "finds a left-left node" do
       found_node = tree.find(root, inception)
       expect(found_node.title).to eq "Inception"
     end
 
-    it "properly finds a left-right node" do
+    it "finds a left-right node" do
       found_node = tree.find(root, matrix)
       expect(found_node.title).to eq "The Matrix"
     end
 
-    it "properly finds a right node" do
+    it "finds a right node" do
       found_node = tree.find(root, jedi)
       expect(found_node.title).to eq "Star Wars: Return of the Jedi"
     end
 
-    it "properly finds a right-left node" do
+    it "finds a right-left node" do
       found_node = tree.find(root, district)
       expect(found_node.title).to eq "District 9"
     end
 
-    it "properly finds a right-right node" do
+    it "finds a right-right node" do
       found_node = tree.find(root, martian)
       expect(found_node.title).to eq "The Martian"
     end
@@ -150,36 +150,36 @@ RSpec.describe MinBinaryHeap, type: Class do
         expect(tree.delete(root, empire)).to eq nil
       end
 
-      it "properly deletes a left node" do
+      it "deletes a left node" do
         tree.delete(root, donnie)
         expect(root.left.title).to eq "Inception"
       end
-      it "properly deletes a left-left node" do
+      it "deletes a left-left node" do
         tree.delete(root, inception)
         expect(root.left.left.title).to eq "The Martian"
       end
 
-      it "properly deletes a left-right node" do
+      it "deletes a left-right node" do
         tree.delete(root, matrix)
         expect(root.left.right.title).to eq "The Martian"
       end
 
-      it "properly deletes a right node" do
+      it "deletes a right node" do
         tree.delete(root, jedi)
         expect(root.right.title).to eq "District 9"
       end
 
-      it "properly deletes a right-left node" do
+      it "deletes a right-left node" do
         tree.delete(root, district)
         expect(root.right.left.title).to eq "The Martian"
       end
 
-      it "properly deletes a right-right node" do
+      it "deletes a right-right node" do
         tree.delete(root, district)
         expect(root.right.right).to eq nil
       end
     end
-    context "tree created will have a right branch with higher ratings than left branch" do
+    context "Will have a right branch with higher ratings than left branch" do
       before do
         tree.insert(root, pacific_rim)
         tree.insert(root, hope)
@@ -190,13 +190,13 @@ RSpec.describe MinBinaryHeap, type: Class do
         tree.insert(root, inception)
       end
 
-      it "properly deletes a node, and bubbles up" do
+      it "deletes a node, and bubbles up" do
         tree.delete(root, mad_max_2)
         expect(root.right.title).to eq "Inception"
         expect(root.right.right.title).to eq "Star Wars: A New Hope"
       end
 
-      it "properly deletes a node, and bubbles up two" do
+      it "deletes a node, and bubbles up two" do
         tree.delete(root, empire)
         expect(root.right.title).to eq "Inception"
         expect(root.right.left.title).to eq "Star Wars: A New Hope"

@@ -14,9 +14,11 @@ class MinBinaryHeap
     index = @tree.length - 1
     parent = index / 2
 
-    if @tree[parent] && index % 2 == 0 
+    is_data_a_left_child = @tree[parent] && index % 2 == 0
+
+    if is_data_a_left_child
       @tree[parent].left = @tree[index]
-    elsif @tree[parent] && index % 2 != 0 
+    else
       @tree[parent].right = @tree[index]
     end
 
@@ -52,12 +54,12 @@ class MinBinaryHeap
       parent = last_index / 2
       last_element = @tree.pop
 
-      deleted_was_left = @tree[parent] && last_index % 2 == 0 
-      deleted_was_right = @tree[parent] && last_index % 2 != 0 
+      deleted_node_was_a_left_child = @tree[parent] && last_index % 2 == 0 
+      deleted_node_was_a_right_child = @tree[parent] && last_index % 2 != 0 
 
-      if deleted_was_left
+      if deleted_node_was_a_left_child
         @tree[parent].left = nil
-      elsif deleted_was_right
+      elsif deleted_node_was_a_right_child
         @tree[parent].right = nil
       end
 
@@ -66,71 +68,52 @@ class MinBinaryHeap
     else
       return nil
     end
+    filter_down(element)
+    filter_up(parent, element)
+  end
 
-    left_child_is_less_than_parent = element.left && element.left.rating < element.rating
-    right_child_is_less_than_parent = element.right && element.right.rating < element.rating
+  def filter_down element
 
-    while left_child_is_less_than_parent or right_child_is_less_than_parent 
-      if left_child_is_less_than_parent && right_child_is_less_than_parent
-        if element.left.rating <= element.right.rating
-          temp_element_title = element.title
-          temp_element_rating = element.rating
-          element.title = element.left.title
-          element.rating = element.left.rating
-          element.left.title = temp_element_title
-          element.left.rating = temp_element_rating
-          element = element.left
-        elsif element.right.rating < element.left.rating
-          temp_element_title = element.title
-          temp_element_rating = element.rating
-          element.title = element.right.title
-          element.rating = element.right.rating
-          element.right.title = temp_element_title
-          element.right.rating = temp_element_rating
-          element = element.right
-        end
-      else
-        if left_child_is_less_than_parent
-          temp_element_title = element.title
-          temp_element_rating = element.rating
-          element.title = element.left.title
-          element.rating = element.left.rating
-          element.left.title = temp_element_title
-          element.left.rating = temp_element_rating
-          element = element.left
-        end
-        if right_child_is_less_than_parent
-          temp_element_title = element.title
-          temp_element_rating = element.rating
-          element.title = element.right.title
-          element.rating = element.right.rating
-          element.right.title = temp_element_title
-          element.right.rating = temp_element_rating
-          element = element.right
-        end
+    left_child_is_less_than_element = element.left && element.left.rating < element.rating
+    right_child_is_less_than_element = element.right && element.right.rating < element.rating
+
+    while left_child_is_less_than_element or right_child_is_less_than_element 
+      if left_child_is_less_than_element
+        temp_element_title = element.title
+        temp_element_rating = element.rating
+        element.title = element.left.title
+        element.rating = element.left.rating
+        element.left.title = temp_element_title
+        element.left.rating = temp_element_rating
+        element = element.left
+      elsif right_child_is_less_than_element
+        temp_element_title = element.title
+        temp_element_rating = element.rating
+        element.title = element.right.title
+        element.rating = element.right.rating
+        element.right.title = temp_element_title
+        element.right.rating = temp_element_rating
+        element = element.right
       end
-      left_child_is_less_than_parent = element.left && element.left.rating < element.rating
-      right_child_is_less_than_parent = element.right && element.right.rating < element.rating
+      left_child_is_less_than_element = element.left && element.left.rating < element.rating
+      right_child_is_less_than_element = element.right && element.right.rating < element.rating
     end
+  end
 
+  def  filter_up(parent, element)
     element_index = @tree.index(element)
     parent = element_index / 2
-
-    parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
-
-    while parent_is_greater_than_child
+    element_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
+    while element_is_greater_than_child
       temp_parent_title = @tree[parent].title
       temp_parent_rating = @tree[parent].rating
       @tree[parent].title = element.title
       @tree[parent].rating = element.rating
       element.title = temp_parent_title
       element.rating = temp_parent_rating
-
       element = @tree[parent]
       parent = element_index / 2
-
-      parent_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
-
+      element_is_greater_than_child = @tree[parent] && @tree[parent].rating > element.rating
     end
   end
 

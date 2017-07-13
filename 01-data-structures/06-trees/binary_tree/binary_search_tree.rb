@@ -8,16 +8,16 @@ class BinarySearchTree
 
   def insert(root, node)
     current_node = root
-    while !current_node.nil?
-      if current_node.rating >= node.rating && current_node.left.nil?
+    while current_node
+      if (current_node.rating >= node.rating && current_node.left.nil?)
         current_node.left = node
         return
-      elsif current_node.rating < node.rating && current_node.right.nil?
+      elsif (current_node.rating < node.rating && current_node.right.nil?)
         current_node.right = node
         return
-      elsif current_node.rating >= node.rating && !current_node.left.nil?
+      elsif (current_node.left && current_node.rating >= node.rating)
         current_node = current_node.left
-      elsif current_node.rating < node.rating && !current_node.right.nil?
+      elsif (current_node.right && current_node.rating < node.rating)
         current_node = current_node.right
       end
     end
