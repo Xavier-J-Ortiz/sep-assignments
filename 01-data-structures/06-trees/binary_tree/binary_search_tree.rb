@@ -9,15 +9,17 @@ class BinarySearchTree
   def insert(root, node)
     current_node = root
     while current_node
-      if (current_node.rating >= node.rating && current_node.left.nil?)
-        current_node.left = node
-        return
-      elsif (current_node.rating < node.rating && current_node.right.nil?)
-        current_node.right = node
-        return
-      elsif (current_node.left && current_node.rating >= node.rating)
+      if current_node.rating >= node.rating
+        if current_node.left.nil?
+          current_node.left = node
+          return
+        end
         current_node = current_node.left
-      elsif (current_node.right && current_node.rating < node.rating)
+      elsif current_node.rating < node.rating
+        if current_node.right.nil?
+          current_node.right = node
+          return
+        end
         current_node = current_node.right
       end
     end
@@ -25,20 +27,18 @@ class BinarySearchTree
 
   def find(root, data)
     current_node = nil
-    stack = [root]
-    while !stack.empty?
-      current_node = stack.pop
+    queue = [root]
+    while !queue.empty?
+      current_node = queue.shift
       if current_node.left
-        stack.push(current_node.left)
+        queue.push(current_node.left)
       end
       if current_node.right
-        stack.push(current_node.right)
+        queue.push(current_node.right)
       end
-      if current_node.left && current_node.left.title == data
-        return current_node.left
-      elsif current_node.right && current_node.right.title == data
-        return current_node.right
-      elsif stack.length == 0
+      if current_node.title == data
+        return current_node
+      elsif queue.length == 0
         return nil
       end
     end
@@ -46,19 +46,28 @@ class BinarySearchTree
 
   def delete(root, data)
     current_node = nil
-    stack = [root]
-    while !stack.empty?
-      current_node = stack.pop
-      if current_node.left
-        stack.push(current_node.left)
+    queue = [root]
+    while !queue.empty?
+      current_node = queue.shift
+      temp_node = nil
+      if current_node.left 
+        queue.push(current_node.left)
+        if current_node.left.title == data
+          temp_node = current_node.left
+          current_node.left = nil
+        end
       end
-      if current_node.right
-        stack.push(current_node.right)
+      if current_node.right 
+        queue.push(current_node.right)
+        if current_node.right.title == data
+          temp_node = current_node.right
+          current_node.right = nil
+        end
       end
-      if current_node.left && current_node.left.title == data
-        temp_left = current_node.left.left
-        temp_right = current_node.left.right
-        current_node.left = nil
+
+      if temp_node
+        temp_left = temp_node.left
+        temp_right = temp_node.right
         if temp_right
           insert(current_node, temp_right)
         end
@@ -66,18 +75,7 @@ class BinarySearchTree
           insert(current_node, temp_left)
         end
         return
-      elsif current_node.right && current_node.right.title == data
-        temp_left = current_node.right.left
-        temp_right = current_node.right.right
-        current_node.right = nil
-        if temp_right
-          insert(current_node, temp_right)
-        end
-        if temp_left
-          insert(current_node, temp_left)
-        end
-        return
-      elsif stack.length == 0
+      elsif queue.length == 0
         return nil
       end
     end
