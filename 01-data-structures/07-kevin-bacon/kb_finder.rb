@@ -1,6 +1,5 @@
 require_relative 'node'
 require_relative 'movie'
-
 def find_kevin_bacon(node)
   if node.name == "Kevin Bacon"
     return []
