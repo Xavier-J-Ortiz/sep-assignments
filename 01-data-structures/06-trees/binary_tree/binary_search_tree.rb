@@ -9,20 +9,20 @@ class BinarySearchTree
   def insert(root, node)
     current_node = root
     while current_node
-      if current_node.rating >= node.rating
-        if current_node.left.nil?
-          current_node.left = node
-          return
-        end
-        current_node = current_node.left
-      elsif current_node.rating < node.rating
-        if current_node.right.nil?
-          current_node.right = node
-          return
-        end
-        current_node = current_node.right
-      end
+      go_left = current_node.rating >= node.rating
+      current_node = find_empty_spot(go_left, current_node, node)
     end
+  end
+
+  def find_empty_spot(go_left, current_node, node)
+    if go_left and current_node.left.nil?
+      current_node.left = node
+      return false
+    elsif !go_left and current_node.right.nil?
+      current_node.right = node
+      return false
+    end
+    return go_left ? current_node.left : current_node.right
   end
 
   def find(root, data)
