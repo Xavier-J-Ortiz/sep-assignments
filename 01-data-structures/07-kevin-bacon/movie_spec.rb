@@ -5,7 +5,6 @@ RSpec.describe Movie, type: Class do
   let(:stallone) { Node.new("Sylvester Stallone") }
   let(:schwarzenegger) { Node.new("Arnold Schwarzenegger") }
   let(:carrey) { Node.new("Jim Carrey") }
-  # actors = ["Kevin Spacey", "Jim Carrey", "Robert Downey Jr."]
   describe "#initalize" do
     before do
       @expendibles = Movie.new("The Expendibles", [stallone, schwarzenegger])
@@ -19,11 +18,11 @@ RSpec.describe Movie, type: Class do
     end
   end
 
-  describe "#assign_to_actors"do
+  describe "#format_actors_array_for_each_actor_node" do
     before do
       @test_movie = Movie.new("Test Movie", [stallone, carrey, schwarzenegger])
     end
-    it "removes an actors .name from the list of actors" do
+    it "assigns a properly formatted actors array to the film_actor_hash of an actor node" do
       expect(stallone.film_actor_hash["Test Movie"]).to eq [carrey, schwarzenegger]
       expect(schwarzenegger.film_actor_hash["Test Movie"]).to eq [stallone, carrey]
       expect(carrey.film_actor_hash["Test Movie"]).to eq [stallone, schwarzenegger]

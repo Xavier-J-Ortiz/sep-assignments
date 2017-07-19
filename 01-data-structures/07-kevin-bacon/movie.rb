@@ -4,10 +4,10 @@ class Movie
 
   def initialize(title, actors)
     @title = title
-    assign_to_actors(actors)
+    format_actors_array_for_each_actor_node(actors)
   end
 
-  def assign_to_actors actors
+  def format_actors_array_for_each_actor_node actors
     @actors = actors
     for actor in @actors
       temp_actors = @actors.clone
