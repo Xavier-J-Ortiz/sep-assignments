@@ -10,19 +10,30 @@ class BinarySearchTree
     current_node = root
     while current_node
       if current_node.rating >= node.rating
-        if current_node.left.nil?
-          current_node.left = node
+        answer = defining_moment(current_node.left, current_node, node)
+        if answer
+          current_node.left = answer 
           return
         end
         current_node = current_node.left
       elsif current_node.rating < node.rating
-        if current_node.right.nil?
-          current_node.right = node
+        answer = defining_moment(current_node.right, current_node, node)
+        if answer
+          current_node.right = answer 
           return
         end
         current_node = current_node.right
       end
     end
+  end
+
+  def defining_moment(child_node, current_node, node)
+    if child_node.nil?
+      child_node = node
+      return child_node
+    end
+    current_node = child_node
+    return nil
   end
 
   def find(root, data)
