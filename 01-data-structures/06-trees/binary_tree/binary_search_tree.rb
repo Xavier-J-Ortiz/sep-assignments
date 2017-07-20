@@ -10,19 +10,21 @@ class BinarySearchTree
     current_node = root
     while current_node
       if current_node.rating >= node.rating
-        answer = defining_moment(current_node.left, current_node, node)
+        child_node = current_node.left
+        answer = defining_moment(child_node, current_node, node)
         if answer
-          current_node.left = answer 
+          child_node = answer 
           return
         end
-        current_node = current_node.left
+        current_node = child_node
       elsif current_node.rating < node.rating
-        answer = defining_moment(current_node.right, current_node, node)
+        child_node = current_node.right
+        answer = defining_moment(child_node, current_node, node)
         if answer
-          current_node.right = answer 
+          child_node = answer 
           return
         end
-        current_node = current_node.right
+        current_node = child_node
       end
     end
   end
