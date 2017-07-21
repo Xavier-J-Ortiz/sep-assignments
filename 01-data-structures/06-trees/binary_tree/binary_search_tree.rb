@@ -9,29 +9,25 @@ class BinarySearchTree
   def insert(root, node)
     current_node = root
     while current_node
-      if current_node.rating >= node.rating
-        child_node = current_node.left
-        answer = defining_moment(child_node, current_node, node)
-        if answer
-          child_node = answer 
-          return
-        end
-        current_node = child_node
-      elsif current_node.rating < node.rating
-        child_node = current_node.right
-        answer = defining_moment(child_node, current_node, node)
-        if answer
-          child_node = answer 
-          return
-        end
-        current_node = child_node
+      child_node = current_node.rating >= node.rating ? current_node.left : current_node.right
+      puts child_node.nil? ? "child_node: nil" : "child_node: " + child_node.title
+      answer = place_node(child_node, current_node, node)
+      puts answer.nil? ? "answer: nil" : "answer: " + answer.title
+      if answer
+        child_node = answer 
+        puts "is child node equal to current_node.left? " + (child_node == current_node.left).to_s
+        return
       end
+      current_node = child_node
+      puts current_node.nil? ? "last child_node: nil" : "last child_node: " + current_node.title
     end
   end
 
-  def defining_moment(child_node, current_node, node)
+  def place_node(child_node, current_node, node)
+    puts child_node.nil? ? "place node first: nil" : "place node first: " + child_node.title
     if child_node.nil?
       child_node = node
+      puts child_node.nil? ? "place node last: nil" : "place node last: " + child_node.title
       return child_node
     end
     current_node = child_node
