@@ -10,20 +10,24 @@ class BinarySearchTree
     current_node = root
     while current_node
       if current_node.rating >= node.rating
-        if current_node.left.nil?
-          current_node.left = node
-          return
-        end
-        current_node = current_node.left
-      elsif current_node.rating < node.rating
-        if current_node.right.nil?
-          current_node.right = node
-          return
-        end
-        current_node = current_node.right
+        current_node.left, current_node = insert_in_nil(current_node.left, node, current_node)
+      else
+        current_node.right, current_node = insert_in_nil(current_node.right, node, current_node)
       end
     end
   end
+
+  def insert_in_nil(child_node, node, current_node)
+    if child_node.nil?
+      child_node = node
+      current_node = nil
+      return [child_node, current_node]
+    else
+      current_node = child_node 
+      return [child_node, current_node]
+    end
+  end
+
 
   def find(root, data)
     current_node = nil
